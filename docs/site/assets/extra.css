@@ -1,0 +1,25 @@
+/* Figures produced at build time by bulanik.plot come in a light and a dark variant. */
+.bulanik-fig svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.bulanik-fig-dark {
+  display: none;
+}
+
+[data-md-color-scheme="slate"] .bulanik-fig-light {
+  display: none;
+}
+
+[data-md-color-scheme="slate"] .bulanik-fig-dark {
+  display: block;
+}
+
+/* Figure captions (the gallery): left-aligned body text, readable measure. */
+.md-typeset figure figcaption {
+  max-width: 40rem;
+  font-style: normal;
+  text-align: left;
+  color: var(--md-default-fg-color--light);
+}

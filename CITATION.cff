@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: >-
+  If you use bulanik in your research, please cite it using the metadata
+  below.
+type: software
+title: bulanik
+version: 0.3.0
+date-released: "2026-11-05"
+abstract: >-
+  Easy-to-use fuzzy numbers, fuzzy inference and fuzzy multi-criteria
+  decision making in pure Python, with optional bridges to LumiX and sezgi
+  and publication-quality figures.
+authors:
+  - family-names: Berber
+    given-names: Tolga
+    email: tolga.berber@fen.ktu.edu.tr
+    orcid: "https://orcid.org/0000-0002-6487-5581"
+    affiliation: "Department of Computer Science, Karadeniz Technical University"
+license: MIT
+repository-code: "https://github.com/tdelphi1981/bulanik"
+url: "https://tdelphi1981.github.io/bulanik/"
+keywords:
+  - fuzzy-logic
+  - fuzzy-inference
+  - fuzzy-numbers
+  - mcdm
+  - anfis
+  - optimization
+  - python

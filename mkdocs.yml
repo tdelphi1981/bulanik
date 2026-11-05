@@ -1,0 +1,160 @@
+site_name: bulanik
+site_description: Easy-to-use fuzzy numbers, fuzzy inference and fuzzy MCDM, with LumiX and sezgi bridges
+site_url: https://tdelphi1981.github.io/bulanik/
+repo_url: https://github.com/tdelphi1981/bulanik
+repo_name: tdelphi1981/bulanik
+docs_dir: docs/site
+site_dir: site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - search.suggest
+
+plugins:
+  - search
+  - privacy
+  - offline
+  - markdown-exec
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["src"]
+          options:
+            show_source: false
+            docstring_style: google
+            members_order: source
+            inherited_members: true
+            show_root_heading: true
+            show_root_full_path: false
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+            filters: ["!^_"]
+
+markdown_extensions:
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - footnotes
+  - def_list
+  - tables
+  - toc:
+      permalink: true
+
+extra_css:
+  - assets/extra.css
+
+extra_javascript:
+  - assets/mathjax-config.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Install: install.md
+  - Quickstart: quickstart.md
+  - Concepts:
+      - Conventions: concepts/conventions.md
+      - Choosing a method: concepts/choosing.md
+  - User guide:
+      - Fuzzy numbers, visually: guide/gallery.md
+      - Triangular numbers (TFN, TrFN): guide/numbers-triangular.md
+      - Orthopair numbers (IFN, PFN, FFN, QROFN): guide/numbers-orthopair.md
+      - Three-part numbers: guide/numbers-threepart.md
+      - Interval-valued numbers (IVQROFN, IVNeutrosophicFN): guide/numbers-interval.md
+      - Interval type-2 trapezoids (IT2TrFN): guide/numbers-it2.md
+      - Aggregation: guide/aggregation.md
+      - Sets and scales: guide/sets-and-scales.md
+      - Mamdani inference: guide/mamdani.md
+      - Sugeno and Tsukamoto: guide/sugeno-tsukamoto.md
+      - Interval type-2: guide/type2.md
+      - ANFIS: guide/anfis.md
+      - Weighting: guide/weighting.md
+      - More weighting methods: guide/weighting-more.md
+      - Ranking: guide/ranking.md
+      - More ranking methods: guide/ranking-more.md
+      - Fuzzy TOPSIS: guide/fuzzy-topsis.md
+      - LumiX bridge: guide/bridge-lumix.md
+      - sezgi bridge: guide/bridge-sezgi.md
+      - Benchmarks: guide/benchmarks.md
+  - Examples:
+      - examples/index.md
+      - "01. Fuzzy numbers": examples/01-fuzzy-numbers.md
+      - "02. Linguistic scales and expert aggregation": examples/02-scale-and-experts.md
+      - "03. Buckley fuzzy AHP": examples/03-fuzzy-ahp.md
+      - "04. SWARA weights and TOPSIS": examples/04-swara-topsis-supplier.md
+      - "05. Intuitionistic pipeline": examples/05-intuitionistic-pipeline.md
+      - "06. Zimmermann fuzzy goals with LumiX": examples/06-zimmermann-lumix.md
+      - "07. Best-worst method with LumiX": examples/07-bwm-lumix.md
+      - "08. Fuzzy BWM with sezgi": examples/08-fuzzy-bwm-sezgi.md
+      - "09. MCDM scores as LumiX data": examples/09-weights-to-lumix.md
+      - "10. Mamdani tipper": examples/10-mamdani-tipper.md
+      - "11. Sugeno controller": examples/11-sugeno-controller.md
+      - "12. Tuning a Sugeno system with sezgi": examples/12-tune-sugeno-with-sezgi.md
+      - "13. Tsukamoto": examples/13-tsukamoto.md
+      - "14. Interval type-2 versus type-1 under noise": examples/14-it2-vs-t1-noise.md
+      - "15. ANFIS on the sinc surface": examples/15-anfis-sinc.md
+      - "16. ANFIS trained with sezgi": examples/16-anfis-with-sezgi.md
+      - "17. Plotting with bulanik.plot": examples/17-plotting.md
+      - "18. Interval-valued AHP and CODAS": examples/18-interval-valued-ahp-codas.md
+      - "19. Interval type-2 AHP and MARCOS": examples/19-it2-ahp-marcos.md
+      - "20. Ranking methods compared": examples/20-ranking-methods-compared.md
+      - "21. Objective and subjective weights": examples/21-critic-piprecia.md
+      - "22. Fuzzy DEMATEL": examples/22-fuzzy-dematel.md
+      - "23. Interval-valued AHP compared": examples/23-interval-valued-ahp.md
+      - "24. Ranking on fuzzy numbers": examples/24-fuzzy-ranking.md
+  - API reference:
+      - Overview: api/index.md
+      - bulanik.numbers: api/numbers.md
+      - bulanik.aggregate: api/aggregate.md
+      - bulanik.sets: api/sets.md
+      - bulanik.scales: api/scales.md
+      - bulanik.inference: api/inference.md
+      - bulanik.type2: api/type2.md
+      - bulanik.anfis: api/anfis.md
+      - bulanik.mcdm: api/mcdm.md
+      - bulanik.lumix: api/lumix.md
+      - bulanik.sezgi: api/sezgi.md
+      - bulanik.plot: api/plot.md
+  - About:
+      - References: about/references.md
+      - Changelog: about/changelog.md
+      - Citing: about/citing.md
+      - Contributing: about/contributing.md
+      - License: about/license.md

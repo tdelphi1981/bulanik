@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+.superpowers/
+.hypothesis/
+*.egg-info/
+build/
+/site/
+/.cache/
+/benchmarks/.cache/

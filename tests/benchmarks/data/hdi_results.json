@@ -1,0 +1,85 @@
+{
+ "produced_by": {
+  "script": "benchmarks/hdi_undp.py",
+  "bulanik": "0.3.0"
+ },
+ "source": {
+  "url": "https://hdr.undp.org/sites/default/files/2025_HDR/HDR25_Composite_indices_complete_time_series.csv",
+  "sha256": "61ed82e5b66c88dfca8ff9fac775c63981ecab6a254862af97acacc41c143117",
+  "year": 2023,
+  "licence": "CC BY 3.0 IGO"
+ },
+ "countries_used": 193,
+ "dropped_no_data": [
+  "Korea (Democratic People's Rep. of)",
+  "Monaco"
+ ],
+ "tied_undp_ranks": 34,
+ "results": {
+  "product": {
+   "lam": 0.0,
+   "spearman_with_undp_rank": 0.9999816380986067,
+   "same_rank_unrounded": 159,
+   "max_rank_difference_unrounded": 2.0,
+   "same_rank_after_rounding_to_3_decimals": 193,
+   "top5": [
+    "ISL",
+    "CHE",
+    "NOR",
+    "DNK",
+    "SWE"
+   ],
+   "bottom3": [
+    "CAF",
+    "SOM",
+    "SSD"
+   ],
+   "max_abs_diff_rescaled_score_vs_geometric_mean": 2.220446049250313e-16
+  },
+  "sum": {
+   "lam": 1.0,
+   "spearman_with_undp_rank": 0.9997654664566173,
+   "same_rank_unrounded": 86,
+   "max_rank_difference_unrounded": 5.0,
+   "same_rank_after_rounding_to_3_decimals": 88,
+   "top5": [
+    "ISL",
+    "CHE",
+    "NOR",
+    "DNK",
+    "DEU"
+   ],
+   "bottom3": [
+    "CAF",
+    "SOM",
+    "SSD"
+   ],
+   "max_abs_diff_rescaled_score_vs_geometric_mean": 0.030372387820355673
+  },
+  "blend_0.5": {
+   "lam": 0.5,
+   "spearman_with_undp_rank": 0.9999023473418925,
+   "same_rank_unrounded": 118,
+   "max_rank_difference_unrounded": 4.0,
+   "same_rank_after_rounding_to_3_decimals": 125,
+   "top5": [
+    "ISL",
+    "CHE",
+    "NOR",
+    "DNK",
+    "SWE"
+   ],
+   "bottom3": [
+    "CAF",
+    "SOM",
+    "SSD"
+   ],
+   "max_abs_diff_rescaled_score_vs_geometric_mean": 0.015187047236607576
+  },
+  "recomputed_hdi": {
+   "max_abs_diff_to_published": 0.0004999098800544388,
+   "agree_at_3_decimals": 193,
+   "countries": 193
+  }
+ }
+}

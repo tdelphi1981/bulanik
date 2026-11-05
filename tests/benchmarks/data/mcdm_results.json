@@ -1,0 +1,6211 @@
+{
+ "produced_by": {
+  "script": "benchmarks/mcdm_libraries.py",
+  "bulanik": "0.3.0",
+  "pymcdm": "1.4.0",
+  "pyrepo-mcda": "0.1.15",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "python": "3.12.8"
+ },
+ "setup": {
+  "seed": 20261105,
+  "random_matrices": 200,
+  "study_matrices": 9,
+  "ahp_matrices": 101,
+  "tie_tolerance": 1e-09,
+  "agree_threshold": 1e-09
+ },
+ "comparison": [
+  {
+   "method": "topsis",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 0.2259492827470463,
+   "min_spearman": -0.2,
+   "identical_rankings": 47,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0074,
+   "seconds_library": 0.016,
+   "classification": "normalisation variant",
+   "explanation": "pymcdm's default is min-max; bulanik always uses vector normalisation and has no option for min-max. The topsis/vector row sets pymcdm to vector normalisation and agrees."
+  },
+  {
+   "method": "topsis/vector",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 2.220446049250313e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0072,
+   "seconds_library": 0.0124,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "vikor",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0065,
+   "seconds_library": 0.0123,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "codas",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 1.7763568394002505e-15,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0108,
+   "seconds_library": 0.0206,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "waspas",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 1.1102230246251565e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0064,
+   "seconds_library": 0.0125,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "edas",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.008,
+   "seconds_library": 0.0125,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "marcos",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0071,
+   "seconds_library": 0.0112,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "copras",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 0.8664652507885413,
+   "min_spearman": -1.0,
+   "identical_rankings": 4,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0063,
+   "seconds_library": 0.0101,
+   "classification": "formula form",
+   "explanation": "pymcdm 1.4.0 computes Q = S+ + (min(S-) * S-) / (S- * (min(S-) / S-)), which simplifies to S+ + S-: a larger cost raises the score. bulanik and pyrepo-mcda use Q = S+ + sum(S-) / (S- * sum(1/S-)). The copras/sum row rebuilds pymcdm's form from bulanik's extras (S_plus + S_minus, divided by its maximum) and agrees."
+  },
+  {
+   "method": "cocoso",
+   "library": "pymcdm",
+   "matrices": 208,
+   "max_abs_diff": 7.105427357601002e-15,
+   "min_spearman": 1.0,
+   "identical_rankings": 208,
+   "bulanik_errors": [
+    "random-150: CoCoSo: alternative 'A2' is worst on every criterion, so k_b divides by zero"
+   ],
+   "library_errors": [],
+   "seconds_bulanik": 0.0086,
+   "seconds_library": 0.0169,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "topsis",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 0.2259492827470463,
+   "min_spearman": -0.2,
+   "identical_rankings": 47,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0072,
+   "seconds_library": 0.0119,
+   "classification": "normalisation variant",
+   "explanation": "pyrepo-mcda's default is min-max; bulanik always uses vector normalisation and has no option for min-max. The topsis/vector row sets pyrepo-mcda to vector normalisation and agrees."
+  },
+  {
+   "method": "topsis/vector",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 2.220446049250313e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.007,
+   "seconds_library": 0.0102,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "vikor",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0062,
+   "seconds_library": 0.0057,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "codas",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 1.7763568394002505e-15,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0106,
+   "seconds_library": 0.0159,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "waspas",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 1.1102230246251565e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0062,
+   "seconds_library": 0.0053,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "edas",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0076,
+   "seconds_library": 0.0064,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "marcos",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.007,
+   "seconds_library": 0.0086,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "copras",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 4.440892098500626e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0061,
+   "seconds_library": 0.0066,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "cocoso",
+   "library": "pyrepo-mcda",
+   "matrices": 208,
+   "max_abs_diff": 7.105427357601002e-15,
+   "min_spearman": 1.0,
+   "identical_rankings": 208,
+   "bulanik_errors": [
+    "random-150: CoCoSo: alternative 'A2' is worst on every criterion, so k_b divides by zero"
+   ],
+   "library_errors": [],
+   "seconds_bulanik": 0.0085,
+   "seconds_library": 0.0092,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "copras/sum",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 3.3306690738754696e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0,
+   "seconds_library": 0.0,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "entropy",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 6.994405055138486e-15,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0034,
+   "seconds_library": 0.0077,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "critic",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 1.6653345369377348e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0098,
+   "seconds_library": 0.1361,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "critic/cost-types",
+   "library": "pymcdm",
+   "matrices": 209,
+   "max_abs_diff": 0.24951205461536025,
+   "min_spearman": -1.0,
+   "identical_rankings": 8,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0096,
+   "seconds_library": 0.1357,
+   "classification": "parameter default",
+   "explanation": "bulanik can flip cost columns in the min-max step (criteria_types=...), which changes the sign of their correlations; both libraries ignore criterion types here. Left at its default (all benefit) bulanik agrees, see the critic rows."
+  },
+  {
+   "method": "entropy",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 2.3425705819590803e-14,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0034,
+   "seconds_library": 0.0073,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "critic",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 1.6653345369377348e-16,
+   "min_spearman": 1.0,
+   "identical_rankings": 209,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0094,
+   "seconds_library": 0.0741,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "critic/cost-types",
+   "library": "pyrepo-mcda",
+   "matrices": 209,
+   "max_abs_diff": 0.24951205461536036,
+   "min_spearman": -1.0,
+   "identical_rankings": 8,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0093,
+   "seconds_library": 0.0738,
+   "classification": "parameter default",
+   "explanation": "bulanik can flip cost columns in the min-max step (criteria_types=...), which changes the sign of their correlations; both libraries ignore criterion types here. Left at its default (all benefit) bulanik agrees, see the critic rows."
+  },
+  {
+   "method": "ahp",
+   "library": "pymcdm",
+   "matrices": 101,
+   "max_abs_diff": 6.625811010962934e-13,
+   "min_spearman": 1.0,
+   "identical_rankings": 101,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0173,
+   "seconds_library": 0.006,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  },
+  {
+   "method": "ahp",
+   "library": "pyrepo-mcda",
+   "matrices": 101,
+   "max_abs_diff": 6.624700787938309e-13,
+   "min_spearman": 1.0,
+   "identical_rankings": 101,
+   "bulanik_errors": [],
+   "library_errors": [],
+   "seconds_bulanik": 0.0174,
+   "seconds_library": 0.0117,
+   "classification": "agree",
+   "explanation": "Same scores within 1e-9 on every matrix."
+  }
+ ],
+ "ahp_consistency_ratio": {
+  "matrices": 101,
+  "max_abs_diff": 0.020881582667049425,
+  "max_abs_diff_same_random_index": 9.988676552552533e-13,
+  "classification": "parameter default",
+  "explanation": "pymcdm uses another random-index table (0.5799, 0.8921, ... ); bulanik and pyrepo-mcda use Saaty's 0.58, 0.90, ... With the same table the ratios agree."
+ },
+ "tie_handling": {
+  "scores": [
+   0.437495,
+   0.437495,
+   0.953267,
+   0.440563
+  ],
+  "bulanik_ranking_positions": [
+   3,
+   4,
+   1,
+   2
+  ],
+  "pymcdm_rankdata": [
+   3.5,
+   3.5,
+   1.0,
+   2.0
+  ],
+  "pyrepo_rank_preferences": [
+   3,
+   3,
+   1,
+   2
+  ],
+  "classification": "tie handling",
+  "explanation": "bulanik returns a strict order in which ties keep input order; pymcdm gives tied alternatives their average rank; pyrepo-mcda gives them the same integer rank and does not skip the next one."
+ },
+ "edge_cases": [
+  {
+   "case": "tied rows",
+   "method": "topsis",
+   "bulanik": [
+    0.436728,
+    0.436728,
+    0.901771,
+    0.398482
+   ],
+   "pymcdm": [
+    0.436728,
+    0.436728,
+    0.901771,
+    0.398482
+   ],
+   "pyrepo-mcda": [
+    0.436728,
+    0.436728,
+    0.901771,
+    0.398482
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "vikor",
+   "bulanik": [
+    0.774194,
+    0.774194,
+    0.0,
+    0.924805
+   ],
+   "pymcdm": [
+    0.774194,
+    0.774194,
+    0.0,
+    0.924805
+   ],
+   "pyrepo-mcda": [
+    0.774194,
+    0.774194,
+    0.0,
+    0.924805
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "codas",
+   "bulanik": [
+    -0.610262,
+    -0.610262,
+    2.129702,
+    -0.909179
+   ],
+   "pymcdm": [
+    -0.610262,
+    -0.610262,
+    2.129702,
+    -0.909179
+   ],
+   "pyrepo-mcda": [
+    -0.610262,
+    -0.610262,
+    2.129702,
+    -0.909179
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "waspas",
+   "bulanik": [
+    0.437495,
+    0.437495,
+    0.953267,
+    0.440563
+   ],
+   "pymcdm": [
+    0.437495,
+    0.437495,
+    0.953267,
+    0.440563
+   ],
+   "pyrepo-mcda": [
+    0.437495,
+    0.437495,
+    0.953267,
+    0.440563
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "edas",
+   "bulanik": [
+    0.101716,
+    0.101716,
+    1.0,
+    0.267382
+   ],
+   "pymcdm": [
+    0.101716,
+    0.101716,
+    1.0,
+    0.267382
+   ],
+   "pyrepo-mcda": [
+    0.101716,
+    0.101716,
+    1.0,
+    0.267382
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "marcos",
+   "bulanik": [
+    0.459758,
+    0.459758,
+    0.916319,
+    0.455496
+   ],
+   "pymcdm": [
+    0.459758,
+    0.459758,
+    0.916319,
+    0.455496
+   ],
+   "pyrepo-mcda": [
+    0.459758,
+    0.459758,
+    0.916319,
+    0.455496
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "copras",
+   "bulanik": [
+    0.458718,
+    0.458718,
+    1.0,
+    0.523298
+   ],
+   "pymcdm": [
+    0.988553,
+    0.988553,
+    1.0,
+    0.660646
+   ],
+   "pyrepo-mcda": [
+    0.458718,
+    0.458718,
+    1.0,
+    0.523298
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "cocoso",
+   "bulanik": [
+    1.241445,
+    1.241445,
+    4.055966,
+    2.344954
+   ],
+   "pymcdm": [
+    1.241445,
+    1.241445,
+    4.055966,
+    2.344954
+   ],
+   "pyrepo-mcda": [
+    1.241445,
+    1.241445,
+    4.055966,
+    2.344954
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "entropy",
+   "bulanik": [
+    0.200864,
+    0.363446,
+    0.43569
+   ],
+   "pymcdm": [
+    0.200864,
+    0.363446,
+    0.43569
+   ],
+   "pyrepo-mcda": [
+    0.200864,
+    0.363446,
+    0.43569
+   ]
+  },
+  {
+   "case": "tied rows",
+   "method": "critic",
+   "bulanik": [
+    0.241058,
+    0.352885,
+    0.406058
+   ],
+   "pymcdm": [
+    0.241058,
+    0.352885,
+    0.406058
+   ],
+   "pyrepo-mcda": [
+    0.241058,
+    0.352885,
+    0.406058
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "topsis",
+   "bulanik": [
+    0.55517,
+    0.897436,
+    0.294483,
+    0.326494
+   ],
+   "pymcdm": [
+    0.55517,
+    0.897436,
+    0.294483,
+    0.326494
+   ],
+   "pyrepo-mcda": [
+    0.55517,
+    0.897436,
+    0.294483,
+    0.326494
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "vikor",
+   "bulanik": [
+    0.510753,
+    0.0,
+    1.0,
+    0.784946
+   ],
+   "pymcdm": "raises ValueError: Criteria with indexes [1] contains equal values for all alternatives. VIKOR method could n",
+   "pyrepo-mcda": [
+    0.510753,
+    0.0,
+    1.0,
+    0.784946
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "codas",
+   "bulanik": [
+    0.009553,
+    1.518456,
+    -0.746003,
+    -0.782005
+   ],
+   "pymcdm": [
+    0.009553,
+    1.518456,
+    -0.746003,
+    -0.782005
+   ],
+   "pyrepo-mcda": [
+    0.009553,
+    1.518456,
+    -0.746003,
+    -0.782005
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "waspas",
+   "bulanik": [
+    0.680244,
+    0.953267,
+    0.5625,
+    0.620065
+   ],
+   "pymcdm": [
+    0.680244,
+    0.953267,
+    0.5625,
+    0.620065
+   ],
+   "pyrepo-mcda": [
+    0.680244,
+    0.953267,
+    0.5625,
+    0.620065
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "edas",
+   "bulanik": [
+    0.428904,
+    1.0,
+    0.179487,
+    0.242424
+   ],
+   "pymcdm": [
+    0.428904,
+    1.0,
+    0.179487,
+    0.242424
+   ],
+   "pyrepo-mcda": [
+    0.428904,
+    1.0,
+    0.179487,
+    0.242424
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "marcos",
+   "bulanik": [
+    0.625618,
+    0.830937,
+    0.543491,
+    0.555568
+   ],
+   "pymcdm": [
+    0.625618,
+    0.830937,
+    0.543491,
+    0.555568
+   ],
+   "pyrepo-mcda": [
+    0.625618,
+    0.830937,
+    0.543491,
+    0.555568
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "copras",
+   "bulanik": [
+    0.718121,
+    1.0,
+    0.610738,
+    0.624161
+   ],
+   "pymcdm": [
+    0.718121,
+    1.0,
+    0.610738,
+    0.624161
+   ],
+   "pyrepo-mcda": [
+    0.718121,
+    1.0,
+    0.610738,
+    0.624161
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "cocoso",
+   "bulanik": [
+    1.691041,
+    3.629711,
+    1.53411,
+    1.956599
+   ],
+   "pymcdm": [
+    1.705074,
+    2.661535,
+    1.647763,
+    1.864735
+   ],
+   "pyrepo-mcda": [
+    1.705074,
+    2.661535,
+    1.647763,
+    1.864735
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "entropy",
+   "bulanik": [
+    0.453367,
+    0.0,
+    0.546633
+   ],
+   "pymcdm": [
+    0.453367,
+    0.0,
+    0.546633
+   ],
+   "pyrepo-mcda": [
+    0.453367,
+    0.0,
+    0.546633
+   ]
+  },
+  {
+   "case": "constant column",
+   "method": "critic",
+   "bulanik": [
+    0.492093,
+    0.0,
+    0.507907
+   ],
+   "pymcdm": "returns non-finite: nan, nan, nan",
+   "pyrepo-mcda": "returns non-finite: nan, nan, nan"
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "topsis",
+   "bulanik": [
+    0.066274,
+    0.932957,
+    0.316405,
+    0.494314
+   ],
+   "pymcdm": [
+    0.066274,
+    0.932957,
+    0.316405,
+    0.494314
+   ],
+   "pyrepo-mcda": [
+    0.066274,
+    0.932957,
+    0.316405,
+    0.494314
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "vikor",
+   "bulanik": [
+    1.0,
+    0.0,
+    0.725396,
+    0.476217
+   ],
+   "pymcdm": [
+    1.0,
+    0.0,
+    0.725396,
+    0.476217
+   ],
+   "pyrepo-mcda": [
+    1.0,
+    0.0,
+    0.725396,
+    0.476217
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "codas",
+   "bulanik": [
+    -2.229141,
+    2.710141,
+    -0.548695,
+    0.067695
+   ],
+   "pymcdm": "raises ValueError: linear_normalization cannot handle zero values.",
+   "pyrepo-mcda": [
+    -2.229141,
+    2.710141,
+    -0.548695,
+    0.067695
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "waspas",
+   "bulanik": "raises ValueError: WASPAS needs strictly positive entries; for fuzzy scores try score=\"normalized\"",
+   "pymcdm": "raises ValueError: linear_normalization cannot handle zero values.",
+   "pyrepo-mcda": [
+    0.112222,
+    0.953267,
+    0.440563,
+    0.557708
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "edas",
+   "bulanik": [
+    0.0,
+    1.0,
+    0.341928,
+    0.524405
+   ],
+   "pymcdm": [
+    0.0,
+    1.0,
+    0.341928,
+    0.524405
+   ],
+   "pyrepo-mcda": [
+    0.0,
+    1.0,
+    0.341928,
+    0.524405
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "marcos",
+   "bulanik": "raises ValueError: MARCOS needs strictly positive entries; for fuzzy scores try score=\"normalized\"",
+   "pymcdm": [
+    0.217558,
+    0.926237,
+    0.460426,
+    0.546587
+   ],
+   "pyrepo-mcda": [
+    0.217558,
+    0.926237,
+    0.460426,
+    0.546587
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "copras",
+   "bulanik": [
+    0.17892,
+    1.0,
+    0.452864,
+    0.567885
+   ],
+   "pymcdm": [
+    0.254201,
+    1.0,
+    0.634146,
+    0.615718
+   ],
+   "pyrepo-mcda": [
+    0.17892,
+    1.0,
+    0.452864,
+    0.567885
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "cocoso",
+   "bulanik": [
+    1.098827,
+    6.746866,
+    2.787162,
+    4.377685
+   ],
+   "pymcdm": [
+    1.098827,
+    6.746866,
+    2.787162,
+    4.377685
+   ],
+   "pyrepo-mcda": [
+    1.098827,
+    6.746866,
+    2.787162,
+    4.377685
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "entropy",
+   "bulanik": [
+    0.7294,
+    0.053205,
+    0.217394
+   ],
+   "pymcdm": "raises ValueError: sum_normalization requires all positive values.",
+   "pyrepo-mcda": [
+    0.7294,
+    0.053205,
+    0.217394
+   ]
+  },
+  {
+   "case": "zero entry in a benefit column",
+   "method": "critic",
+   "bulanik": [
+    0.367567,
+    0.40746,
+    0.224974
+   ],
+   "pymcdm": [
+    0.367567,
+    0.40746,
+    0.224974
+   ],
+   "pyrepo-mcda": [
+    0.367567,
+    0.40746,
+    0.224974
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "topsis",
+   "bulanik": [
+    0.0,
+    0.90862,
+    0.667263,
+    0.44695
+   ],
+   "pymcdm": [
+    0.0,
+    0.90862,
+    0.667263,
+    0.44695
+   ],
+   "pyrepo-mcda": [
+    0.0,
+    0.90862,
+    0.667263,
+    0.44695
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "vikor",
+   "bulanik": [
+    1.0,
+    0.0,
+    0.269981,
+    0.556043
+   ],
+   "pymcdm": [
+    1.0,
+    0.0,
+    0.269981,
+    0.556043
+   ],
+   "pyrepo-mcda": [
+    1.0,
+    0.0,
+    0.269981,
+    0.556043
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "codas",
+   "bulanik": [
+    -2.447945,
+    2.167085,
+    0.706419,
+    -0.42556
+   ],
+   "pymcdm": [
+    -2.447945,
+    2.167085,
+    0.706419,
+    -0.42556
+   ],
+   "pyrepo-mcda": [
+    -2.447945,
+    2.167085,
+    0.706419,
+    -0.42556
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "waspas",
+   "bulanik": [
+    0.239477,
+    0.953267,
+    0.714216,
+    0.557708
+   ],
+   "pymcdm": [
+    0.239477,
+    0.953267,
+    0.714216,
+    0.557708
+   ],
+   "pyrepo-mcda": [
+    0.239477,
+    0.953267,
+    0.714216,
+    0.557708
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "edas",
+   "bulanik": [
+    0.0,
+    1.0,
+    0.720506,
+    0.468262
+   ],
+   "pymcdm": [
+    0.0,
+    1.0,
+    0.720506,
+    0.468262
+   ],
+   "pyrepo-mcda": [
+    0.0,
+    1.0,
+    0.720506,
+    0.468262
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "marcos",
+   "bulanik": [
+    0.235673,
+    0.910917,
+    0.691132,
+    0.537547
+   ],
+   "pymcdm": [
+    0.235673,
+    0.910917,
+    0.691132,
+    0.537547
+   ],
+   "pyrepo-mcda": [
+    0.235673,
+    0.910917,
+    0.691132,
+    0.537547
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "copras",
+   "bulanik": [
+    0.256621,
+    1.0,
+    0.767456,
+    0.588283
+   ],
+   "pymcdm": [
+    0.57396,
+    0.968643,
+    1.0,
+    0.60668
+   ],
+   "pyrepo-mcda": [
+    0.256621,
+    1.0,
+    0.767456,
+    0.588283
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "cocoso",
+   "bulanik": "raises ValueError: CoCoSo: alternative 'A1' is worst on every criterion, so k_b divides by zero",
+   "pymcdm": "returns non-finite: nan, inf, inf, inf",
+   "pyrepo-mcda": "returns non-finite: nan, inf, inf, inf"
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "entropy",
+   "bulanik": [
+    0.274886,
+    0.218593,
+    0.506521
+   ],
+   "pymcdm": [
+    0.274886,
+    0.218593,
+    0.506521
+   ],
+   "pyrepo-mcda": [
+    0.274886,
+    0.218593,
+    0.506521
+   ]
+  },
+  {
+   "case": "alternative worst on every criterion",
+   "method": "critic",
+   "bulanik": [
+    0.272487,
+    0.482423,
+    0.245089
+   ],
+   "pymcdm": [
+    0.272487,
+    0.482423,
+    0.245089
+   ],
+   "pyrepo-mcda": [
+    0.272487,
+    0.482423,
+    0.245089
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "topsis",
+   "bulanik": [
+    0.563865,
+    0.736205,
+    0.353815,
+    0.327157
+   ],
+   "pymcdm": [
+    0.563865,
+    0.736205,
+    0.353815,
+    0.327157
+   ],
+   "pyrepo-mcda": [
+    0.563865,
+    0.736205,
+    0.353815,
+    0.327157
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "vikor",
+   "bulanik": [
+    0.171642,
+    0.166667,
+    0.723881,
+    0.722222
+   ],
+   "pymcdm": [
+    0.171642,
+    0.166667,
+    0.723881,
+    0.722222
+   ],
+   "pyrepo-mcda": [
+    0.171642,
+    0.166667,
+    0.723881,
+    0.722222
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "codas",
+   "bulanik": [
+    0.097677,
+    1.129547,
+    -0.292749,
+    -0.934476
+   ],
+   "pymcdm": [
+    0.097677,
+    1.129547,
+    -0.292749,
+    -0.934476
+   ],
+   "pyrepo-mcda": [
+    0.097677,
+    1.129547,
+    -0.292749,
+    -0.934476
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "waspas",
+   "bulanik": [
+    0.638184,
+    0.788995,
+    0.5625,
+    0.535634
+   ],
+   "pymcdm": [
+    0.638184,
+    0.788995,
+    0.5625,
+    0.535634
+   ],
+   "pyrepo-mcda": [
+    0.638184,
+    0.788995,
+    0.5625,
+    0.535634
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "edas",
+   "bulanik": [
+    0.475913,
+    0.833333,
+    0.320513,
+    0.186869
+   ],
+   "pymcdm": [
+    0.475913,
+    0.833333,
+    0.320513,
+    0.186869
+   ],
+   "pyrepo-mcda": [
+    0.475913,
+    0.833333,
+    0.320513,
+    0.186869
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "marcos",
+   "bulanik": [
+    0.621387,
+    0.747727,
+    0.580133,
+    0.500204
+   ],
+   "pymcdm": [
+    0.621387,
+    0.747727,
+    0.580133,
+    0.500204
+   ],
+   "pyrepo-mcda": [
+    0.621387,
+    0.747727,
+    0.580133,
+    0.500204
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "copras",
+   "bulanik": [
+    0.801932,
+    1.0,
+    0.73913,
+    0.647343
+   ],
+   "pymcdm": "raises ValueError: types array contains only profit criteria. COPRAS method requires at least one cost criter",
+   "pyrepo-mcda": "returns non-finite: nan, nan, nan, nan"
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "cocoso",
+   "bulanik": [
+    2.027506,
+    2.368233,
+    2.16235,
+    1.901267
+   ],
+   "pymcdm": [
+    2.027506,
+    2.368233,
+    2.16235,
+    1.901267
+   ],
+   "pyrepo-mcda": [
+    2.027506,
+    2.368233,
+    2.16235,
+    1.901267
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "entropy",
+   "bulanik": [
+    0.399871,
+    0.117998,
+    0.482131
+   ],
+   "pymcdm": [
+    0.399871,
+    0.117998,
+    0.482131
+   ],
+   "pyrepo-mcda": [
+    0.399871,
+    0.117998,
+    0.482131
+   ]
+  },
+  {
+   "case": "benefit criteria only",
+   "method": "critic",
+   "bulanik": [
+    0.391435,
+    0.329165,
+    0.2794
+   ],
+   "pymcdm": [
+    0.391435,
+    0.329165,
+    0.2794
+   ],
+   "pyrepo-mcda": [
+    0.391435,
+    0.329165,
+    0.2794
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "topsis",
+   "bulanik": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "pymcdm": "returns non-finite: nan, nan, nan",
+   "pyrepo-mcda": "returns non-finite: nan, nan, nan"
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "vikor",
+   "bulanik": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pymcdm": "raises ValueError: Criteria with indexes [0 1 2] contains equal values for all alternatives. VIKOR method cou",
+   "pyrepo-mcda": [
+    -0.6,
+    -0.6,
+    -0.6
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "codas",
+   "bulanik": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pymcdm": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pyrepo-mcda": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "waspas",
+   "bulanik": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "pymcdm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "pyrepo-mcda": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "edas",
+   "bulanik": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "pymcdm": "returns non-finite: nan, nan, nan",
+   "pyrepo-mcda": "returns non-finite: nan, nan, nan"
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "marcos",
+   "bulanik": [
+    0.666667,
+    0.666667,
+    0.666667
+   ],
+   "pymcdm": [
+    0.666667,
+    0.666667,
+    0.666667
+   ],
+   "pyrepo-mcda": [
+    0.666667,
+    0.666667,
+    0.666667
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "copras",
+   "bulanik": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "pymcdm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "pyrepo-mcda": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "cocoso",
+   "bulanik": "raises ValueError: CoCoSo: alternative 'A1' is worst on every criterion, so k_b divides by zero",
+   "pymcdm": [
+    1.984692,
+    1.984692,
+    1.984692
+   ],
+   "pyrepo-mcda": [
+    1.984692,
+    1.984692,
+    1.984692
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "entropy",
+   "bulanik": "raises ValueError: no criterion discriminates between the alternatives",
+   "pymcdm": [
+    0.333333,
+    0.333333,
+    0.333333
+   ],
+   "pyrepo-mcda": [
+    0.333333,
+    0.333333,
+    0.333333
+   ]
+  },
+  {
+   "case": "all alternatives identical",
+   "method": "critic",
+   "bulanik": "raises ValueError: no criterion discriminates between the alternatives (all columns constant)",
+   "pymcdm": "returns non-finite: nan, nan, nan",
+   "pyrepo-mcda": "returns non-finite: nan, nan, nan"
+  }
+ ],
+ "fixtures": [
+  {
+   "id": "pymcdm-cocoso",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestCOCOSO",
+   "method": "cocoso",
+   "study": "Yazdani, Zarate, Zavadskas & Turskis (2019), Management Decision 57(9), 2501-2519",
+   "decimals": 3,
+   "max_abs_diff": 0.00034979559724934717,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-codas",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestCODAS",
+   "method": "codas",
+   "study": "Badi, Shetwan & Abdulshahed (2017), Proc. 1st ICMNEE, 395-407",
+   "decimals": 4,
+   "max_abs_diff": 4.95622918800509e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-copras-1",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestCOPRAS",
+   "method": "copras",
+   "study": "Zavadskas, Kaklauskas, Peldschus & Turskis (2007), Baltic J. Road Bridge Eng. 2(4), 195-203",
+   "decimals": 4,
+   "max_abs_diff": 0.07218302434803359,
+   "within_rounding": false,
+   "weights_refused_without_normalize": null,
+   "classification": "formula form",
+   "explanation": "pymcdm's test expects its S+ + S- form; see the copras row."
+  },
+  {
+   "id": "pymcdm-copras-2",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestCOPRAS2",
+   "method": "copras",
+   "study": "Zavadskas, Kaklauskas, Peldschus & Turskis (2007), Baltic J. Road Bridge Eng. 2(4), 195-203",
+   "decimals": 4,
+   "max_abs_diff": 0.12504494179068382,
+   "within_rounding": false,
+   "weights_refused_without_normalize": null,
+   "classification": "formula form",
+   "explanation": "pymcdm's test expects its S+ + S- form; see the copras row."
+  },
+  {
+   "id": "pymcdm-edas",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestEDAS",
+   "method": "edas",
+   "study": "Yazdani, Torkayesh, Santibanez-Gonzalez & Otaghsara (2020), Sustainable Operations and Computers 1, 35-42",
+   "decimals": 3,
+   "max_abs_diff": 0.0003847557885432451,
+   "within_rounding": true,
+   "weights_refused_without_normalize": "weights must sum to 1, got 0.999",
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-marcos",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestMARCOS",
+   "method": "marcos",
+   "study": "Ulutas, Karabasevic, Popovic, Stanujkic, Nguyen & Karakoy (2020), Mathematics 8(10), 1672",
+   "decimals": 4,
+   "max_abs_diff": 4.895116587977366e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": "weights must sum to 1, got 1.0001",
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-topsis",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestTOPSIS",
+   "method": "topsis",
+   "study": "Opricovic & Tzeng (2004), EJOR 156(2), 445-455",
+   "decimals": 3,
+   "max_abs_diff": 0.2621405801238009,
+   "within_rounding": false,
+   "weights_refused_without_normalize": null,
+   "classification": "normalisation variant",
+   "explanation": "pymcdm's test uses its min-max default; bulanik uses vector normalisation."
+  },
+  {
+   "id": "pymcdm-vikor-yang",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestVIKOR::test_output_yang",
+   "method": "vikor",
+   "study": "Yang & Wu (2020), IEEE Access 8, 21261-21271",
+   "decimals": 4,
+   "max_abs_diff": 3.303590240411047e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-vikor-opricovic",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestVIKOR::test_output_opricovic",
+   "method": "vikor",
+   "study": "Opricovic & Tzeng (2004), EJOR 156(2), 445-455",
+   "decimals": 9,
+   "max_abs_diff": 0.0,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-waspas",
+   "library": "pymcdm",
+   "test": "test_mcdm.py::TestWASPAS",
+   "method": "waspas",
+   "study": "Chakraborty, Zavadskas & Antucheviciene (2015), ECECSR 49(1), 5-22",
+   "decimals": 4,
+   "max_abs_diff": 0.005905900175228407,
+   "within_rounding": false,
+   "weights_refused_without_normalize": "weights must sum to 1, got 1.0155",
+   "classification": "parameter default",
+   "explanation": "The fixture's weights sum to 1.0155 and pymcdm's test turns validation off. bulanik rejects them; with normalize_weights=True the scores shrink by up to 0.0059 and the ranking stays the same."
+  },
+  {
+   "id": "pymcdm-entropy",
+   "library": "pymcdm",
+   "test": "test_weights.py::TestEntropyWeights",
+   "method": "entropy",
+   "study": "Elsayed, Dawood & Karthikeyan (2017), Int. J. Eng. Trends Technol. 46(2), 60-66",
+   "decimals": 6,
+   "max_abs_diff": 3.097101239774025e-07,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-critic",
+   "library": "pymcdm",
+   "test": "test_weights.py::TestCRITICWeights",
+   "method": "critic",
+   "study": "Tus & Aytac Adali (2019), Opsearch 56(2), 528-538",
+   "decimals": 3,
+   "max_abs_diff": 0.0004892431636414063,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pymcdm-ahp",
+   "library": "pymcdm",
+   "test": "test_weights.py::TestAHPWeights",
+   "method": "ahp",
+   "study": "Wang & Chin (2011), Information Sciences 181(23), 5240-5248",
+   "decimals": 4,
+   "max_abs_diff": 3.169230034760079e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-vikor",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_1.py::Test_VIKOR",
+   "method": "vikor",
+   "study": "Papathanasiou & Ploskas (2018), Multiple Criteria Decision Aid, 31-55",
+   "decimals": 3,
+   "max_abs_diff": 0.00041123439667128947,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-topsis",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_1.py::Test_TOPSIS",
+   "method": "topsis",
+   "study": "Ersoy (2021), LogForum 17(3)",
+   "decimals": 2,
+   "max_abs_diff": 0.0007470383595620245,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-codas-1",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_1.py::Test_CODAS::test_codas",
+   "method": "codas",
+   "study": "Badi, Abdulshahed & Shetwan (2018), Decision Making: Appl. Manag. Eng. 1(1), 1-12",
+   "decimals": 4,
+   "max_abs_diff": 4.95622918800509e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-codas-2",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_1.py::Test_CODAS::test_codas2",
+   "method": "codas",
+   "study": "Badi, Ballem & Shetwan (2018), Int. J. Quality Research 12(3), 609",
+   "decimals": 4,
+   "max_abs_diff": 4.725038644726176e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-edas",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_1.py::Test_EDAS",
+   "method": "edas",
+   "study": "Ersoy (2021), LogForum 17(3)",
+   "decimals": 3,
+   "max_abs_diff": 0.00033963581258622533,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-marcos",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_2.py::Test_MARCOS",
+   "method": "marcos",
+   "study": "Stevic, Pamucar, Puska & Chatterjee (2020), Computers & Industrial Engineering 140, 106231",
+   "decimals": 3,
+   "max_abs_diff": 0.0004977944798412182,
+   "within_rounding": true,
+   "weights_refused_without_normalize": "weights must sum to 1, got 0.997",
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-copras",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_2.py::Test_COPRAS",
+   "method": "copras",
+   "study": "Goswami & Mitra (2020), Int. J. Data and Network Science 4(1), 27-42",
+   "decimals": 5,
+   "max_abs_diff": 4.3685573006824185e-06,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-cocoso",
+   "library": "pyrepo-mcda",
+   "test": "test_mcda_methods_2.py::Test_COCOSO",
+   "method": "cocoso",
+   "study": "Yazdani, Zarate, Zavadskas & Turskis (2019), Management Decision 57(9), 2501-2519",
+   "decimals": 1,
+   "max_abs_diff": 0.0013081063986697394,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-entropy-xu",
+   "library": "pyrepo-mcda",
+   "test": "test_weighting_methods.py::Test_Entropy::test_Entropy",
+   "method": "entropy",
+   "study": "Xu (2004), EJOR 156(2), 530-532",
+   "decimals": 4,
+   "max_abs_diff": 4.771310061990608e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-entropy-podvezko",
+   "library": "pyrepo-mcda",
+   "test": "test_weighting_methods.py::Test_Entropy::test_Entropy2",
+   "method": "entropy",
+   "study": "Zavadskas & Podvezko (2016), IJITDM 15(2), 267-283",
+   "decimals": 4,
+   "max_abs_diff": 3.8755440396054386e-05,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-entropy-ersoy",
+   "library": "pyrepo-mcda",
+   "test": "test_weighting_methods.py::Test_Entropy::test_Entropy3",
+   "method": "entropy",
+   "study": "Ersoy (2021), LogForum 17(3)",
+   "decimals": 3,
+   "max_abs_diff": 0.00042721143954690954,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-entropy-lee",
+   "library": "pyrepo-mcda",
+   "test": "test_weighting_methods.py::Test_Entropy::test_Entropy4",
+   "method": "entropy",
+   "study": "Lee & Chang (2018), Renewable and Sustainable Energy Reviews 92, 883-896",
+   "decimals": 3,
+   "max_abs_diff": 0.00045980297058107345,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  },
+  {
+   "id": "pyrepo-critic",
+   "library": "pyrepo-mcda",
+   "test": "test_weighting_methods.py::Test_CRITIC",
+   "method": "critic",
+   "study": "Tus & Aytac Adali (2019), Opsearch 56(2), 528-538",
+   "decimals": 3,
+   "max_abs_diff": 0.0004892431636414063,
+   "within_rounding": true,
+   "weights_refused_without_normalize": null,
+   "classification": "",
+   "explanation": ""
+  }
+ ],
+ "frozen": {
+  "n_random": 6,
+  "seed": 20261105,
+  "problems": [
+   {
+    "name": "cocoso-study",
+    "matrix": [
+     [
+      60,
+      0.4,
+      2540,
+      500,
+      990
+     ],
+     [
+      6.35,
+      0.15,
+      1016,
+      3000,
+      1041
+     ],
+     [
+      6.8,
+      0.1,
+      1727.2,
+      1500,
+      1676
+     ],
+     [
+      10,
+      0.2,
+      1000,
+      2000,
+      965
+     ],
+     [
+      2.5,
+      0.1,
+      560,
+      500,
+      915
+     ],
+     [
+      4.5,
+      0.08,
+      1016,
+      350,
+      508
+     ],
+     [
+      3,
+      0.1,
+      1778,
+      1000,
+      920
+     ]
+    ],
+    "weights": [
+     0.036,
+     0.192,
+     0.326,
+     0.326,
+     0.12
+    ],
+    "types": [
+     "benefit",
+     "cost",
+     "benefit",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "codas-study",
+    "matrix": [
+     [
+      45,
+      3600,
+      45,
+      0.9
+     ],
+     [
+      25,
+      3800,
+      60,
+      0.8
+     ],
+     [
+      23,
+      3100,
+      35,
+      0.9
+     ],
+     [
+      14,
+      3400,
+      50,
+      0.7
+     ],
+     [
+      15,
+      3300,
+      40,
+      0.8
+     ],
+     [
+      28,
+      3000,
+      30,
+      0.6
+     ]
+    ],
+    "weights": [
+     0.2857,
+     0.3036,
+     0.2321,
+     0.1786
+    ],
+    "types": [
+     "benefit",
+     "cost",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "copras-study",
+    "matrix": [
+     [
+      30,
+      12.487,
+      6.261,
+      10.88,
+      7.61
+     ],
+     [
+      20,
+      12.372,
+      5.961,
+      10.88,
+      7.46
+     ],
+     [
+      27,
+      11.096,
+      6.262,
+      9.92,
+      6.69
+     ],
+     [
+      18,
+      10.982,
+      5.962,
+      9.92,
+      6.54
+     ],
+     [
+      24,
+      11.017,
+      6.283,
+      9.98,
+      7.0
+     ],
+     [
+      16,
+      10.903,
+      5.983,
+      9.98,
+      6.85
+     ]
+    ],
+    "weights": [
+     0.53,
+     0.1175,
+     0.1175,
+     0.1175,
+     0.1175
+    ],
+    "types": [
+     "benefit",
+     "cost",
+     "cost",
+     "cost",
+     "cost"
+    ]
+   },
+   {
+    "name": "edas-study",
+    "matrix": [
+     [
+      3873,
+      39.55,
+      0.27,
+      0.87,
+      150,
+      0.07,
+      12,
+      2130
+     ],
+     [
+      5067,
+      67.26,
+      0.23,
+      0.23,
+      40,
+      0.02,
+      21,
+      2200
+     ],
+     [
+      2213,
+      24.69,
+      0.08,
+      0.17,
+      200,
+      0.04,
+      35,
+      570
+     ],
+     [
+      6243,
+      132,
+      0.07,
+      0.25,
+      100,
+      0.04,
+      16,
+      100
+     ],
+     [
+      8312,
+      460.47,
+      0.05,
+      0.21,
+      25,
+      0.1,
+      25,
+      200
+     ]
+    ],
+    "weights": [
+     0.131,
+     0.113,
+     0.126,
+     0.125,
+     0.126,
+     0.129,
+     0.132,
+     0.118
+    ],
+    "types": [
+     "cost",
+     "cost",
+     "cost",
+     "benefit",
+     "benefit",
+     "cost",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "marcos-study",
+    "matrix": [
+     [
+      660,
+      1000,
+      1600,
+      18,
+      1200
+     ],
+     [
+      800,
+      1000,
+      1600,
+      24,
+      900
+     ],
+     [
+      980,
+      1000,
+      2500,
+      24,
+      900
+     ],
+     [
+      920,
+      1500,
+      1600,
+      24,
+      900
+     ],
+     [
+      1380,
+      1500,
+      1500,
+      24,
+      1150
+     ],
+     [
+      1230,
+      1000,
+      1600,
+      24,
+      1150
+     ],
+     [
+      680,
+      1500,
+      1600,
+      18,
+      1100
+     ],
+     [
+      960,
+      2000,
+      1600,
+      12,
+      1150
+     ]
+    ],
+    "weights": [
+     0.1061,
+     0.3476,
+     0.333,
+     0.1185,
+     0.0948
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "waspas-study",
+    "matrix": [
+     [
+      30,
+      23,
+      5,
+      0.745,
+      0.745,
+      1500,
+      5000
+     ],
+     [
+      18,
+      13,
+      15,
+      0.745,
+      0.745,
+      1300,
+      6000
+     ],
+     [
+      15,
+      12,
+      10,
+      0.5,
+      0.5,
+      950,
+      7000
+     ],
+     [
+      25,
+      20,
+      13,
+      0.745,
+      0.745,
+      1200,
+      4000
+     ],
+     [
+      14,
+      18,
+      14,
+      0.255,
+      0.745,
+      950,
+      3500
+     ],
+     [
+      17,
+      15,
+      9,
+      0.745,
+      0.5,
+      1250,
+      5250
+     ],
+     [
+      23,
+      18,
+      20,
+      0.5,
+      0.745,
+      1100,
+      3000
+     ],
+     [
+      16,
+      8,
+      14,
+      0.255,
+      0.5,
+      1500,
+      3000
+     ]
+    ],
+    "weights": [
+     0.1181,
+     0.1181,
+     0.0445,
+     0.1181,
+     0.2861,
+     0.2861,
+     0.029
+    ],
+    "types": [
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit",
+     "cost",
+     "cost"
+    ]
+   },
+   {
+    "name": "ersoy-study",
+    "matrix": [
+     [
+      256,
+      8,
+      41,
+      1.6,
+      1.77,
+      7347.16
+     ],
+     [
+      256,
+      8,
+      32,
+      1.0,
+      1.8,
+      6919.99
+     ],
+     [
+      256,
+      8,
+      53,
+      1.6,
+      1.9,
+      8400
+     ],
+     [
+      256,
+      8,
+      41,
+      1.0,
+      1.75,
+      6808.9
+     ],
+     [
+      512,
+      8,
+      35,
+      1.6,
+      1.7,
+      8479.99
+     ],
+     [
+      256,
+      4,
+      35,
+      1.6,
+      1.7,
+      7499.99
+     ]
+    ],
+    "weights": [
+     0.405,
+     0.221,
+     0.134,
+     0.199,
+     0.007,
+     0.034
+    ],
+    "types": [
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit",
+     "cost",
+     "cost"
+    ]
+   },
+   {
+    "name": "goswami-study",
+    "matrix": [
+     [
+      80,
+      16,
+      2,
+      5
+     ],
+     [
+      110,
+      32,
+      2,
+      9
+     ],
+     [
+      130,
+      64,
+      4,
+      9
+     ],
+     [
+      185,
+      64,
+      4,
+      1
+     ],
+     [
+      135,
+      64,
+      3,
+      4
+     ],
+     [
+      140,
+      32,
+      3,
+      5
+     ],
+     [
+      185,
+      64,
+      6,
+      7
+     ],
+     [
+      110,
+      16,
+      3,
+      3
+     ],
+     [
+      120,
+      16,
+      4,
+      3
+     ],
+     [
+      340,
+      128,
+      6,
+      5
+     ]
+    ],
+    "weights": [
+     0.6,
+     0.14,
+     0.2,
+     0.06
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "tus-study",
+    "matrix": [
+     [
+      5000,
+      3,
+      3,
+      4,
+      3,
+      2
+     ],
+     [
+      680,
+      5,
+      3,
+      2,
+      2,
+      1
+     ],
+     [
+      2000,
+      3,
+      2,
+      3,
+      4,
+      3
+     ],
+     [
+      600,
+      4,
+      3,
+      1,
+      2,
+      2
+     ],
+     [
+      800,
+      2,
+      4,
+      3,
+      3,
+      4
+     ]
+    ],
+    "weights": [
+     0.157,
+     0.249,
+     0.168,
+     0.121,
+     0.154,
+     0.151
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "random-0",
+    "matrix": [
+     [
+      1574.055661,
+      10449.058322,
+      25.991803,
+      5.367134,
+      52.278877,
+      2.367831,
+      0.648663,
+      3238.961252
+     ],
+     [
+      1182.857639,
+      16599.109302,
+      57.831134,
+      2.615641,
+      36.983462,
+      5.411492,
+      1.593736,
+      4641.355292
+     ],
+     [
+      381.060006,
+      4173.96089,
+      10.875703,
+      5.48839,
+      144.685374,
+      2.470794,
+      1.145608,
+      3226.713772
+     ],
+     [
+      290.224511,
+      4929.757387,
+      30.772423,
+      0.822506,
+      19.163546,
+      1.586683,
+      0.512921,
+      4073.780596
+     ],
+     [
+      753.32066,
+      2754.75164,
+      84.148846,
+      4.181633,
+      46.934686,
+      2.548018,
+      0.452302,
+      2108.001802
+     ],
+     [
+      1317.058444,
+      4919.947077,
+      39.587419,
+      4.56685,
+      39.737117,
+      2.593407,
+      1.199117,
+      6894.460253
+     ]
+    ],
+    "weights": [
+     0.1104694512444273,
+     0.39122419428983285,
+     0.023753330506592535,
+     0.07522300853622915,
+     0.20690072628252226,
+     0.10158255481053943,
+     0.048657595362338144,
+     0.0421891389675184
+    ],
+    "types": [
+     "benefit",
+     "cost",
+     "cost",
+     "cost",
+     "cost",
+     "benefit",
+     "cost",
+     "benefit"
+    ]
+   },
+   {
+    "name": "random-1",
+    "matrix": [
+     [
+      0.158136,
+      0.928974,
+      18.084726,
+      197.506784,
+      177.990061,
+      2.445758,
+      4.569504
+     ],
+     [
+      0.192439,
+      0.213433,
+      92.833985,
+      51.219744,
+      277.819618,
+      6.634967,
+      2.186721
+     ],
+     [
+      0.279092,
+      0.703781,
+      31.166561,
+      110.905879,
+      355.129424,
+      4.405308,
+      0.778668
+     ],
+     [
+      0.191711,
+      0.950964,
+      21.783956,
+      69.94576,
+      256.616505,
+      7.54308,
+      1.808675
+     ],
+     [
+      0.997758,
+      0.86626,
+      17.049492,
+      777.513866,
+      436.343403,
+      5.599105,
+      2.308279
+     ]
+    ],
+    "weights": [
+     0.1746129600297995,
+     0.13369560646075504,
+     0.04237344307740291,
+     0.21373605880107893,
+     0.2512891560137052,
+     0.1086621008216654,
+     0.07563067479559299
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit",
+     "benefit",
+     "benefit",
+     "cost",
+     "cost"
+    ]
+   },
+   {
+    "name": "random-2",
+    "matrix": [
+     [
+      199.090873,
+      0.165796,
+      0.102826,
+      4.235027,
+      5.979901,
+      0.101931
+     ],
+     [
+      221.117574,
+      0.085959,
+      0.597193,
+      3.953097,
+      30.843359,
+      0.352052
+     ],
+     [
+      157.238742,
+      0.123189,
+      0.141743,
+      13.895471,
+      6.696756,
+      0.693107
+     ],
+     [
+      122.900654,
+      0.105705,
+      0.142376,
+      6.277574,
+      29.255516,
+      0.428708
+     ],
+     [
+      79.960418,
+      0.077758,
+      0.395173,
+      8.400947,
+      6.034012,
+      0.06518
+     ]
+    ],
+    "weights": [
+     0.21701348297931883,
+     0.0664476909603006,
+     0.1555274751576399,
+     0.11755703336615854,
+     0.14896285959029032,
+     0.2944914579462917
+    ],
+    "types": [
+     "benefit",
+     "cost",
+     "cost",
+     "cost",
+     "cost",
+     "benefit"
+    ]
+   },
+   {
+    "name": "random-3",
+    "matrix": [
+     [
+      0.012903,
+      8.691988,
+      5.557356
+     ],
+     [
+      0.014815,
+      5.074897,
+      8.943943
+     ],
+     [
+      0.013231,
+      10.6413,
+      11.686582
+     ],
+     [
+      0.030385,
+      4.080075,
+      8.788157
+     ]
+    ],
+    "weights": [
+     0.10341770604897818,
+     0.5337428138161753,
+     0.3628394801348465
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "random-4",
+    "matrix": [
+     [
+      1864.116209,
+      2.205304,
+      2.905891,
+      5992.403983,
+      0.489847,
+      0.038677,
+      0.125569
+     ],
+     [
+      1645.734163,
+      0.241769,
+      1.214199,
+      4049.772471,
+      0.310055,
+      0.018121,
+      0.146209
+     ],
+     [
+      3099.042222,
+      1.274342,
+      1.823527,
+      9694.392342,
+      0.185679,
+      0.072853,
+      0.105498
+     ],
+     [
+      1530.132475,
+      1.616255,
+      1.972636,
+      15506.48457,
+      0.325409,
+      0.039908,
+      0.298554
+     ],
+     [
+      6169.094185,
+      1.415234,
+      2.789222,
+      7611.2548,
+      0.757026,
+      0.104208,
+      0.447888
+     ],
+     [
+      3655.042707,
+      1.842526,
+      3.994594,
+      4114.900663,
+      0.279628,
+      0.11862,
+      0.104773
+     ],
+     [
+      961.016568,
+      0.499244,
+      2.648404,
+      5219.154712,
+      0.828134,
+      0.038399,
+      0.224047
+     ],
+     [
+      2786.151766,
+      0.334178,
+      4.663334,
+      11141.52829,
+      0.342865,
+      0.055905,
+      0.445529
+     ],
+     [
+      956.602708,
+      0.621189,
+      3.169615,
+      8102.220109,
+      0.18991,
+      0.055099,
+      0.09547
+     ]
+    ],
+    "weights": [
+     0.178823849460429,
+     0.10129515696927154,
+     0.13437786415780367,
+     0.20517717491660867,
+     0.10676754971422377,
+     0.11470693755374364,
+     0.1588514672279197
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "benefit",
+     "cost",
+     "cost",
+     "benefit",
+     "benefit"
+    ]
+   },
+   {
+    "name": "random-5",
+    "matrix": [
+     [
+      85.115812,
+      89.298239,
+      0.580877
+     ],
+     [
+      111.277687,
+      179.71856,
+      0.626584
+     ],
+     [
+      45.151068,
+      248.16296,
+      0.610872
+     ],
+     [
+      258.116047,
+      116.813755,
+      1.975525
+     ],
+     [
+      40.553851,
+      215.558728,
+      2.970717
+     ],
+     [
+      99.479155,
+      148.493277,
+      0.700106
+     ]
+    ],
+    "weights": [
+     0.19844662199207808,
+     0.06368562926025456,
+     0.7378677487476674
+    ],
+    "types": [
+     "cost",
+     "benefit",
+     "cost"
+    ]
+   }
+  ],
+  "pairwise": [
+   {
+    "name": "pairwise-0",
+    "matrix": [
+     [
+      1.0,
+      2,
+      1.0
+     ],
+     [
+      0.5,
+      1.0,
+      6
+     ],
+     [
+      1,
+      0.16666666666666666,
+      1.0
+     ]
+    ]
+   },
+   {
+    "name": "pairwise-1",
+    "matrix": [
+     [
+      1.0,
+      1.0,
+      2,
+      3,
+      3,
+      1,
+      9
+     ],
+     [
+      1,
+      1.0,
+      0.1111111111111111,
+      0.125,
+      0.25,
+      0.5,
+      0.14285714285714285
+     ],
+     [
+      0.5,
+      9,
+      1.0,
+      2,
+      7,
+      0.2,
+      0.14285714285714285
+     ],
+     [
+      0.3333333333333333,
+      8,
+      0.5,
+      1.0,
+      4,
+      0.16666666666666666,
+      4
+     ],
+     [
+      0.3333333333333333,
+      4,
+      0.14285714285714285,
+      0.25,
+      1.0,
+      0.1111111111111111,
+      3
+     ],
+     [
+      1.0,
+      2,
+      5,
+      6,
+      9,
+      1.0,
+      7
+     ],
+     [
+      0.1111111111111111,
+      7,
+      7,
+      0.25,
+      0.3333333333333333,
+      0.14285714285714285,
+      1.0
+     ]
+    ]
+   },
+   {
+    "name": "pairwise-2",
+    "matrix": [
+     [
+      1.0,
+      0.25,
+      7,
+      6,
+      1,
+      8,
+      1
+     ],
+     [
+      4,
+      1.0,
+      0.2,
+      6,
+      0.2,
+      7,
+      0.5
+     ],
+     [
+      0.14285714285714285,
+      5,
+      1.0,
+      0.2,
+      0.2,
+      8,
+      0.125
+     ],
+     [
+      0.16666666666666666,
+      0.16666666666666666,
+      5,
+      1.0,
+      6,
+      9,
+      9
+     ],
+     [
+      1.0,
+      5,
+      5,
+      0.16666666666666666,
+      1.0,
+      6,
+      2
+     ],
+     [
+      0.125,
+      0.14285714285714285,
+      0.125,
+      0.1111111111111111,
+      0.16666666666666666,
+      1.0,
+      6
+     ],
+     [
+      1.0,
+      2,
+      8,
+      0.1111111111111111,
+      0.5,
+      0.16666666666666666,
+      1.0
+     ]
+    ]
+   },
+   {
+    "name": "pairwise-3",
+    "matrix": [
+     [
+      1.0,
+      0.125,
+      0.125,
+      7,
+      3,
+      0.25,
+      0.14285714285714285,
+      9,
+      0.3333333333333333
+     ],
+     [
+      8,
+      1.0,
+      0.1111111111111111,
+      0.3333333333333333,
+      0.5,
+      5,
+      0.25,
+      1.0,
+      0.1111111111111111
+     ],
+     [
+      8,
+      9,
+      1.0,
+      9,
+      3,
+      1,
+      0.16666666666666666,
+      0.2,
+      0.3333333333333333
+     ],
+     [
+      0.14285714285714285,
+      3,
+      0.1111111111111111,
+      1.0,
+      8,
+      8,
+      7,
+      3,
+      0.14285714285714285
+     ],
+     [
+      0.3333333333333333,
+      2,
+      0.3333333333333333,
+      0.125,
+      1.0,
+      6,
+      3,
+      0.3333333333333333,
+      9
+     ],
+     [
+      4,
+      0.2,
+      1.0,
+      0.125,
+      0.16666666666666666,
+      1.0,
+      5,
+      0.5,
+      3
+     ],
+     [
+      7,
+      4,
+      6,
+      0.14285714285714285,
+      0.3333333333333333,
+      0.2,
+      1.0,
+      6,
+      0.16666666666666666
+     ],
+     [
+      0.1111111111111111,
+      1,
+      5,
+      0.3333333333333333,
+      3,
+      2,
+      0.16666666666666666,
+      1.0,
+      6
+     ],
+     [
+      3,
+      9,
+      3,
+      7,
+      0.1111111111111111,
+      0.3333333333333333,
+      6,
+      0.16666666666666666,
+      1.0
+     ]
+    ]
+   },
+   {
+    "name": "pairwise-4",
+    "matrix": [
+     [
+      1.0,
+      0.2,
+      3,
+      8
+     ],
+     [
+      5,
+      1.0,
+      5,
+      0.5
+     ],
+     [
+      0.3333333333333333,
+      0.2,
+      1.0,
+      5
+     ],
+     [
+      0.125,
+      2,
+      0.2,
+      1.0
+     ]
+    ]
+   },
+   {
+    "name": "pairwise-5",
+    "matrix": [
+     [
+      1.0,
+      0.25,
+      2,
+      6,
+      3,
+      0.2,
+      8
+     ],
+     [
+      4,
+      1.0,
+      2,
+      0.3333333333333333,
+      9,
+      0.3333333333333333,
+      0.16666666666666666
+     ],
+     [
+      0.5,
+      0.5,
+      1.0,
+      6,
+      0.25,
+      0.2,
+      4
+     ],
+     [
+      0.16666666666666666,
+      3,
+      0.16666666666666666,
+      1.0,
+      3,
+      0.16666666666666666,
+      0.3333333333333333
+     ],
+     [
+      0.3333333333333333,
+      0.1111111111111111,
+      4,
+      0.3333333333333333,
+      1.0,
+      4,
+      9
+     ],
+     [
+      5,
+      3,
+      5,
+      6,
+      0.25,
+      1.0,
+      9
+     ],
+     [
+      0.125,
+      6,
+      0.25,
+      3,
+      0.1111111111111111,
+      0.1111111111111111,
+      1.0
+     ]
+    ]
+   }
+  ],
+  "scores": {
+   "pymcdm": {
+    "topsis": [
+     [
+      0.47353446015233636,
+      0.5833349683105075,
+      0.5826966108347655,
+      0.4544165919686037,
+      0.28916491795269783,
+      0.32410323163882016,
+      0.4955574101763658
+     ],
+     [
+      0.5877391730571853,
+      0.43729440412658627,
+      0.54073480024032,
+      0.3888390193014934,
+      0.40958063813249496,
+      0.49829492530337877
+     ],
+     [
+      0.6963933554596669,
+      0.31266071768681125,
+      0.7409561802047943,
+      0.3493952692817038,
+      0.57062471603466,
+      0.2851290641330588
+     ],
+     [
+      0.5434620781499853,
+      0.5050448115936323,
+      0.6469626912208459,
+      0.4502911800465123,
+      0.3256997422380831
+     ],
+     [
+      0.25414072020264944,
+      0.24210669161012896,
+      0.49651465268445094,
+      0.38223342973145225,
+      0.3651610201879308,
+      0.2406112293707244,
+      0.38657255660026274,
+      0.5273207857606108
+     ],
+     [
+      0.5483718043697057,
+      0.6024644358959378,
+      0.47380197951208775,
+      0.7268046610731013,
+      0.7057360632063161,
+      0.3489875401802783,
+      0.7624239324487471,
+      0.08551997463971968
+     ],
+     [
+      0.42422276712928514,
+      0.3217329256423579,
+      0.4452858746328727,
+      0.33533275279177005,
+      0.8076250244090675,
+      0.29707930718863457
+     ],
+     [
+      0.7095045040953011,
+      0.6872079437963844,
+      0.7444096008878157,
+      0.57282837400462,
+      0.6902111886638732,
+      0.6611116747300941,
+      0.6197529975603353,
+      0.7068618405435829,
+      0.7209526160445102,
+      0.29049549590469886
+     ],
+     [
+      0.41222261536494537,
+      0.5562852909392701,
+      0.4922982980351492,
+      0.49870937684293376,
+      0.5262937126498112
+     ],
+     [
+      0.5091894860330911,
+      0.3604115598652414,
+      0.5743150130891497,
+      0.7089050871835629,
+      0.7610597831867999,
+      0.7553073317186024
+     ],
+     [
+      0.438768140720226,
+      0.39766515178048784,
+      0.5420888442643494,
+      0.44159882646471593,
+      0.6461255774181455
+     ],
+     [
+      0.5154133576746723,
+      0.5172289807794913,
+      0.7061997618985211,
+      0.5105244141049797,
+      0.3286795702124708
+     ],
+     [
+      0.4956606245394467,
+      0.3281315674190235,
+      0.9970388428475255,
+      0.25120534588262383
+     ],
+     [
+      0.5718992012310888,
+      0.5244203451526275,
+      0.4584668129356794,
+      0.4553489770286491,
+      0.522098864019846,
+      0.6189691008733658,
+      0.5621838261708526,
+      0.5866978150628507,
+      0.5505910250424956
+     ],
+     [
+      0.9089856659017864,
+      0.9115476808770058,
+      0.986744006174367,
+      0.3919209859370294,
+      0.2172289377083785,
+      0.9035856768796022
+     ]
+    ],
+    "topsis/vector": [
+     [
+      0.41582244292965376,
+      0.6370074714749798,
+      0.563925692689192,
+      0.49318257542743,
+      0.30681991342312637,
+      0.3343740193261911,
+      0.47527500573551384
+     ],
+     [
+      0.7834608615161808,
+      0.4715621830184011,
+      0.3363146699932726,
+      0.25082633177142516,
+      0.19836750675302744,
+      0.39896279560955233
+     ],
+     [
+      0.9223426382067134,
+      0.2851495205591721,
+      0.7856796110234177,
+      0.16160546225260256,
+      0.5723580204648567,
+      0.06857902220621571
+     ],
+     [
+      0.6117940554789836,
+      0.5261516795117213,
+      0.6168159233739324,
+      0.46849377596160946,
+      0.2888453019269735
+     ],
+     [
+      0.2261655748919281,
+      0.23104085428555715,
+      0.44528223811041884,
+      0.41236739985679427,
+      0.37394843174754544,
+      0.19089885418084612,
+      0.4145950830100684,
+      0.5810470667957242
+     ],
+     [
+      0.5946888972563463,
+      0.5505986181307795,
+      0.45221031848793597,
+      0.7287779880157546,
+      0.5676881745445514,
+      0.4363516185795649,
+      0.6932384617842878,
+      0.14700634535449486
+     ],
+     [
+      0.30747246765708647,
+      0.2536310946015863,
+      0.32717597113383873,
+      0.26232561756376577,
+      0.856252961640438,
+      0.1913648181004665
+     ],
+     [
+      0.7345942075418502,
+      0.7193359722595704,
+      0.7513197726301682,
+      0.5744242740608186,
+      0.7153816044569533,
+      0.6727388411985716,
+      0.5987933768110242,
+      0.7143667943816078,
+      0.7104767554284187,
+      0.26540579245814977
+     ],
+     [
+      0.3395585143121364,
+      0.6075774599089079,
+      0.5615035322154875,
+      0.5921199398520423,
+      0.6135508024217539
+     ],
+     [
+      0.5210807679267009,
+      0.3654742480130736,
+      0.5698948880450267,
+      0.7536106273779766,
+      0.7975623350908713,
+      0.7862964858049086
+     ],
+     [
+      0.4566186498804143,
+      0.4022431502483436,
+      0.450439177880038,
+      0.42178580226034307,
+      0.6062201966334967
+     ],
+     [
+      0.4538927984851004,
+      0.4507540897313025,
+      0.7651837765857985,
+      0.5513486499156754,
+      0.3069187200544289
+     ],
+     [
+      0.5442994838457835,
+      0.3005377745371953,
+      0.996692621462312,
+      0.21174099426025828
+     ],
+     [
+      0.5919518167052156,
+      0.5452939957436583,
+      0.48017192064307457,
+      0.5024385317244807,
+      0.4817614712435843,
+      0.6055478815120274,
+      0.5850656822036433,
+      0.5780694225042999,
+      0.5781339167949817
+     ],
+     [
+      0.9289408109164805,
+      0.9094731918398083,
+      0.9865870294912344,
+      0.38891752301704496,
+      0.2283831209391611,
+      0.907720117685713
+     ]
+    ],
+    "vikor": [
+     [
+      0.6952986236435875,
+      0.2701112987664829,
+      0.0,
+      0.48289046621374754,
+      1.0,
+      0.9645732205218179,
+      0.38553747882481576
+     ],
+     [
+      0.12368050668543264,
+      0.8509951995494134,
+      0.1557145001028272,
+      0.911250079969292,
+      0.8150137926856782,
+      0.5308114937072648
+     ],
+     [
+      0.23462185049111225,
+      0.8181818181818181,
+      0.0,
+      0.6373788772409114,
+      0.3098200023856484,
+      0.8598550916783112
+     ],
+     [
+      0.6460259929613772,
+      0.2105634386232878,
+      0.2916666666666666,
+      0.3732123418277843,
+      0.9702380952380952
+     ],
+     [
+      0.9012721130940758,
+      1.0,
+      0.5199408364900223,
+      0.2256511891279728,
+      0.6120629834140636,
+      0.9725246026477137,
+      0.15655875346584916,
+      0.0
+     ],
+     [
+      0.5889737561135863,
+      0.3677066860631304,
+      0.7690443638164666,
+      0.125,
+      0.15143487904675057,
+      0.8034358625475961,
+      0.006698312014290305,
+      1.0
+     ],
+     [
+      0.7855453256690306,
+      0.9907948000667434,
+      0.7438000632706812,
+      0.940107808956407,
+      0.0,
+      1.0
+     ],
+     [
+      0.19879584017515056,
+      0.22753147235905868,
+      0.0,
+      0.41026272577996714,
+      0.1837027914614122,
+      0.2495073891625616,
+      0.19359605911330052,
+      0.1983579638752053,
+      0.1478106185002737,
+      1.0
+     ],
+     [
+      0.563157894736842,
+      0.2345003228352105,
+      0.313156195604155,
+      0.40056675514742796,
+      0.5
+     ],
+     [
+      0.5510268628796274,
+      1.0,
+      0.7049680480626718,
+      0.08162665294560904,
+      0.036624292655795115,
+      0.0
+     ],
+     [
+      0.8602305477524134,
+      0.7551189340397856,
+      0.29476873276214954,
+      0.6057110505048241,
+      0.0
+     ],
+     [
+      0.5979181720612305,
+      0.38152617458171006,
+      0.0,
+      0.3624272752032296,
+      1.0
+     ],
+     [
+      0.6612496321019139,
+      0.8109630240429611,
+      0.0,
+      1.0
+     ],
+     [
+      0.43891868094040276,
+      0.6273391834042031,
+      0.7403234410618603,
+      1.0,
+      0.709271853086284,
+      0.2433228210378128,
+      0.3842920723124805,
+      0.26747235294474125,
+      0.5576541675905005
+     ],
+     [
+      0.09896194010272485,
+      0.10069889836866672,
+      0.0,
+      0.7421996995523875,
+      1.0,
+      0.10989418902752138
+     ]
+    ],
+    "codas": [
+     [
+      0.5121764914884954,
+      1.463300034504913,
+      1.0715325899642418,
+      -0.21246799780012637,
+      -1.8515205523193041,
+      -1.1716767695713806,
+      0.18865620373316055
+     ],
+     [
+      1.3913790737629108,
+      0.3411294975357321,
+      -0.21703810997124345,
+      -0.5381355183013501,
+      -0.7291853807341694,
+      -0.24814956229188
+     ],
+     [
+      1.392700636801411,
+      -0.6738669550310756,
+      0.9864544045149053,
+      -0.8250019554034312,
+      0.3188178394349862,
+      -1.1991039703167956
+     ],
+     [
+      0.5509565419741853,
+      0.0707918471972758,
+      1.27384989120492,
+      -0.9325817366897317,
+      -0.9630165436866496
+     ],
+     [
+      -0.6848092126936289,
+      -0.727346592169494,
+      0.7112375998483984,
+      0.17288253642402315,
+      0.06220963164451056,
+      -0.8363542750714003,
+      0.22705897430673155,
+      1.0751213377108595
+     ],
+     [
+      0.8944177071390262,
+      0.23553748620345033,
+      -0.48131516452483675,
+      0.9773779834316435,
+      0.7130616204397647,
+      -0.7654914808803341,
+      0.7702175343685711,
+      -2.343805686177285
+     ],
+     [
+      0.10201729924955455,
+      -0.6216672620838805,
+      0.25486917809279774,
+      -0.5136286614737128,
+      1.8199397243436277,
+      -1.0415302781283866
+     ],
+     [
+      3.530875074809877,
+      0.7207988926655182,
+      0.514869345414367,
+      -2.089776264617064,
+      -0.5178022108808041,
+      -0.953328551922021,
+      -0.7047387126800475,
+      0.49632329616371396,
+      0.20600002212447302,
+      -1.2032208910780127
+     ],
+     [
+      -0.4820070984657866,
+      0.2997274361214692,
+      -0.3241218011376193,
+      0.1577241031395631,
+      0.3486773603423736
+     ],
+     [
+      -1.1491822741572577,
+      -0.9967115577309233,
+      -0.41995005894658055,
+      0.9476261592654367,
+      1.6495590076970135,
+      -0.031341276127688666
+     ],
+     [
+      0.17397078788763384,
+      -0.8110220466628006,
+      -0.12185315578616349,
+      -0.2781093414725665,
+      1.0370137560338968
+     ],
+     [
+      0.45590445506002536,
+      -0.0983407208122643,
+      1.303012773464034,
+      -0.2827064701752143,
+      -1.377870037536581
+     ],
+     [
+      0.10128955983752402,
+      -0.7118200913767849,
+      1.8254816535992917,
+      -1.2149511220600306
+     ],
+     [
+      -0.3275177393411981,
+      -0.17290736531718767,
+      -1.1857929267784235,
+      -0.7435877873643093,
+      0.1338489043783477,
+      1.3878465751367695,
+      0.4837823418799717,
+      0.039063820706779245,
+      0.3852641766992505
+     ],
+     [
+      2.3623816912888422,
+      1.6262443705334975,
+      2.6007630327110345,
+      -4.332787349486174,
+      -3.029108524002638,
+      0.7725067789554391
+     ]
+    ],
+    "waspas": [
+     [
+      0.45496412677931686,
+      0.6049194974348961,
+      0.6427691199793943,
+      0.4866899892345974,
+      0.30873881762202005,
+      0.3450841328186709,
+      0.5280854898753125
+     ],
+     [
+      0.8882068820640778,
+      0.7798737865274857,
+      0.7375220756473126,
+      0.6605725591612455,
+      0.6586493338648873,
+      0.7040079752732821
+     ],
+     [
+      0.9517284964385908,
+      0.7793067515629248,
+      0.936235928227103,
+      0.7746449234227064,
+      0.876302600765174,
+      0.7290810534538468
+     ],
+     [
+      0.5450928373502482,
+      0.4688518472582882,
+      0.6497445472499849,
+      0.34878291460674016,
+      0.28580902947955744
+     ],
+     [
+      0.6656766395695906,
+      0.6549362397898846,
+      0.7505949607432654,
+      0.7360792845893229,
+      0.7117971843968851,
+      0.6423573987915406,
+      0.7488813721972125,
+      0.7718422328829566
+     ],
+     [
+      0.8314964278286379,
+      0.7886440941803523,
+      0.6999031337300288,
+      0.8792421446129148,
+      0.7913361847240176,
+      0.7022114577796628,
+      0.8650851582758832,
+      0.5671385538922666
+     ],
+     [
+      0.7459997811759158,
+      0.6555355975785919,
+      0.7698012362485047,
+      0.678371741099013,
+      0.9433365553241277,
+      0.6246357044922493
+     ],
+     [
+      0.6483488313064133,
+      0.5720862489547713,
+      0.6289587614995915,
+      0.45650032271231944,
+      0.5509907589912142,
+      0.5029591992755342,
+      0.5583518890709149,
+      0.5385386984433256,
+      0.5383680877544966,
+      0.45984597093205093
+     ],
+     [
+      0.5622247166368757,
+      0.657539287718407,
+      0.619222420206259,
+      0.640926080363784,
+      0.7227871141181288
+     ],
+     [
+      0.38406634355184055,
+      0.3841922127572929,
+      0.39358061345828277,
+      0.5901420810789357,
+      0.6123299296556366,
+      0.5237737716966029
+     ],
+     [
+      0.5381946221746173,
+      0.39235915325067494,
+      0.5354924867833708,
+      0.4586491298074594,
+      0.6281010120712394
+     ],
+     [
+      0.6041955772711296,
+      0.5423325809971636,
+      0.7484133972693847,
+      0.550303437572135,
+      0.35618203346425786
+     ],
+     [
+      0.6986817257744962,
+      0.6124400907229883,
+      0.9974217744618019,
+      0.5080927904444339
+     ],
+     [
+      0.5178751794882157,
+      0.43766149679401356,
+      0.4456098652394285,
+      0.4857385340520606,
+      0.5222005868501146,
+      0.6222301890299626,
+      0.5422034135263469,
+      0.5157464985575273,
+      0.5552240100055355
+     ],
+     [
+      0.8320616814764884,
+      0.7803641637154946,
+      0.943389697656801,
+      0.27283253654714584,
+      0.3476462938455229,
+      0.7184697742785091
+     ]
+    ],
+    "edas": [
+     [
+      0.4312612389142812,
+      0.8919280267251798,
+      0.8011066601932308,
+      0.5496972196202383,
+      0.13247869655623895,
+      0.18494059399095103,
+      0.5706575621223349
+     ],
+     [
+      0.9287759026880159,
+      0.5439361412529843,
+      0.36744137717356967,
+      0.06760594559483615,
+      0.07131437855540586,
+      0.24428847823178423
+     ],
+     [
+      0.9021366955316215,
+      0.2393621151876163,
+      0.8289057782584305,
+      0.21065934692585706,
+      0.6132586443920948,
+      0.041341650273076534
+     ],
+     [
+      0.8415076704343105,
+      0.6325045145804095,
+      0.8821389476240826,
+      0.45595283292005906,
+      0.10349529450952259
+     ],
+     [
+      0.1721985604463897,
+      0.1526657348220416,
+      0.5810885488729156,
+      0.5579805960088299,
+      0.37088075692348577,
+      0.06651981864074039,
+      0.5832318127926965,
+      0.7326541581724396
+     ],
+     [
+      0.8289578397354609,
+      0.6198955375017936,
+      0.37375542630520375,
+      0.8905665723078584,
+      0.6626222036793818,
+      0.3954863097274427,
+      0.8394938726990695,
+      0.039856422121218864
+     ],
+     [
+      0.41414073355791703,
+      0.12999419821568695,
+      0.46069425800866226,
+      0.2120060994906317,
+      0.9443396358125862,
+      0.04295784618044415
+     ],
+     [
+      0.7869570456510713,
+      0.7154205361266021,
+      0.7815280106251584,
+      0.4649165753643956,
+      0.6286437047616236,
+      0.5156065229062327,
+      0.6866846375457083,
+      0.63821419989311,
+      0.6310361231893296,
+      0.5
+     ],
+     [
+      0.13890651629981507,
+      0.650240115042978,
+      0.5697359595170038,
+      0.5541084331976946,
+      0.8445249671984897
+     ],
+     [
+      0.46293521793244874,
+      0.3228659576120077,
+      0.3472517398669995,
+      0.8892575340520014,
+      0.8577853559052012,
+      0.8481942893271922
+     ],
+     [
+      0.3035101242845501,
+      0.15992078672701437,
+      0.4359309374412609,
+      0.2362123964666462,
+      0.5
+     ],
+     [
+      0.5293955368768423,
+      0.30504641176242847,
+      0.8691319180946546,
+      0.48598144628089,
+      0.11432401097702641
+     ],
+     [
+      0.4574224228132803,
+      0.27621902568228335,
+      1.0,
+      0.0022203464449258416
+     ],
+     [
+      0.5866388150511118,
+      0.34191157445225034,
+      0.32160423530776794,
+      0.37016070102136994,
+      0.38301620194413627,
+      0.7644584424818028,
+      0.44386681929876115,
+      0.6052965493682599,
+      0.5393849636912765
+     ],
+     [
+      0.901265744700812,
+      0.8519598540050718,
+      1.0,
+      0.14124708991624135,
+      0.1360122104934976,
+      0.8188651578709205
+     ]
+    ],
+    "marcos": [
+     [
+      0.5106927836965686,
+      0.6190544279992037,
+      0.6435538917478693,
+      0.4834454920811418,
+      0.33697334801748063,
+      0.38816265291263247,
+      0.5422908174508477
+     ],
+     [
+      0.7408368228254545,
+      0.6559689735432402,
+      0.6265146681728797,
+      0.572718144092339,
+      0.569084207689352,
+      0.5954832506836163
+     ],
+     [
+      0.7376233972094096,
+      0.6074926153404345,
+      0.72530945863209,
+      0.6095147718894484,
+      0.6801346974790736,
+      0.5778251573016339
+     ],
+     [
+      0.5688304228317019,
+      0.49676999835513796,
+      0.6813725386507579,
+      0.3762750360572466,
+      0.3344081873799061
+     ],
+     [
+      0.5648977356434653,
+      0.5543439120998118,
+      0.6409972121046248,
+      0.6173560758287643,
+      0.6015437149513647,
+      0.5452857866274469,
+      0.6282410555850054,
+      0.6542775809699067
+     ],
+     [
+      0.7170795078947184,
+      0.6737560399340019,
+      0.6011818514661141,
+      0.744376492564299,
+      0.6884412466697074,
+      0.5972762618942011,
+      0.7329338592939967,
+      0.4874164948993796
+     ],
+     [
+      0.6389968876655624,
+      0.5591242560878722,
+      0.6606734371381665,
+      0.5787603277250295,
+      0.7923089295099993,
+      0.5336374216086819
+     ],
+     [
+      0.6874635775373295,
+      0.5729951938633385,
+      0.6060833184256561,
+      0.4498066613362243,
+      0.5291047588634189,
+      0.4897907088012763,
+      0.5520079829677901,
+      0.5498402069311868,
+      0.5469367602939265,
+      0.49297108081108226
+     ],
+     [
+      0.5563937554101388,
+      0.6321466144776839,
+      0.5860012747911283,
+      0.6102765037938306,
+      0.6815419681439184
+     ],
+     [
+      0.39779408049302023,
+      0.4152463239444094,
+      0.4207377422632601,
+      0.6097687870934133,
+      0.6376756344042067,
+      0.5256040177394895
+     ],
+     [
+      0.5673852167881781,
+      0.43806391729488925,
+      0.5589980675200753,
+      0.5009052225843272,
+      0.6665424028275495
+     ],
+     [
+      0.6566377351787853,
+      0.5758460372476881,
+      0.7391392132459195,
+      0.5456399018072753,
+      0.3993358497305066
+     ],
+     [
+      0.6329484844856446,
+      0.5532650081236478,
+      0.8867809960400498,
+      0.46356847152631897
+     ],
+     [
+      0.5200943256511341,
+      0.47238902191148174,
+      0.4512059837356798,
+      0.4852815021171204,
+      0.549316206747285,
+      0.649054366421198,
+      0.5579241188604056,
+      0.5372411832681208,
+      0.573189941353473
+     ],
+     [
+      0.8281406229927097,
+      0.7769712618585205,
+      0.9135641222901449,
+      0.2692744399705831,
+      0.3853881563802931,
+      0.7079663725555383
+     ]
+    ],
+    "copras": [
+     [
+      1.0,
+      0.897366854899883,
+      0.7624712940037899,
+      0.7619264370139647,
+      0.3340945313909433,
+      0.3355646638264936,
+      0.6160658176892707
+     ],
+     [
+      1.0,
+      0.8809597266872231,
+      0.7276018348347761,
+      0.695654658556288,
+      0.6735935494266585,
+      0.6909840252165121
+     ],
+     [
+      1.0,
+      0.7969534815203277,
+      0.907783662061735,
+      0.7242673265010444,
+      0.8537490308048374,
+      0.6897543929012453
+     ],
+     [
+      1.0,
+      0.69913696977044,
+      0.6109056767852883,
+      0.5484926496485021,
+      0.8399604703484748
+     ],
+     [
+      0.7681238273980364,
+      0.7882354098835248,
+      0.9633956907779507,
+      0.9182902941959085,
+      0.966597518572148,
+      0.851030389103303,
+      0.8802239979909214,
+      1.0
+     ],
+     [
+      1.0,
+      0.8775905537944287,
+      0.6525853585451427,
+      0.9186505805802284,
+      0.7226764661431931,
+      0.7672713548116301,
+      0.8512390834518095,
+      0.6872131670827186
+     ],
+     [
+      0.7499881675630173,
+      0.6613098414159403,
+      0.7846313866888103,
+      0.6838046852966518,
+      1.0,
+      0.6440628277705835
+     ],
+     [
+      0.2531056822644346,
+      0.3541383280325515,
+      0.4875437467782037,
+      0.545836604175079,
+      0.4425296004833281,
+      0.41406760936841586,
+      0.6320205992573636,
+      0.32438303412714786,
+      0.3693047694242479,
+      1.0
+     ],
+     [
+      1.0,
+      0.6622852091561368,
+      0.8118810968032322,
+      0.6131138385571296,
+      0.7678835623087693
+     ],
+     [
+      0.7690910613007831,
+      1.0,
+      0.6937513491934413,
+      0.3354976700864124,
+      0.42921719881706344,
+      0.5754332210694917
+     ],
+     [
+      0.4151504105813621,
+      0.3811659993560153,
+      0.4259737763616229,
+      0.41073532614601677,
+      1.0
+     ],
+     [
+      0.4752557790772332,
+      1.0,
+      0.9365546311305186,
+      0.7874638794325249,
+      0.46129112441865716
+     ],
+     [
+      0.7039886766750131,
+      0.6160988989621385,
+      1.0,
+      0.6229214990627796
+     ],
+     [
+      0.5688331151000843,
+      0.32330851762982366,
+      0.5805294399596681,
+      0.6976426072833736,
+      1.0,
+      0.6810132398091269,
+      0.5108727998757004,
+      0.7780362918137179,
+      0.43930340143963453
+     ],
+     [
+      0.27976768830024046,
+      0.33728222258669965,
+      0.2819685358047601,
+      0.8838034221536482,
+      1.0,
+      0.34232884014835524
+     ]
+    ],
+    "cocoso": [
+     [
+      2.0413128390265998,
+      2.787989783418825,
+      2.882349795597249,
+      2.4160457689259287,
+      1.2986918936013303,
+      1.443142907339168,
+      2.519094173200623
+     ],
+     [
+      2.5779555842052653,
+      1.8991527576322798,
+      2.364681486064278,
+      1.716620628763005,
+      1.949669322003008,
+      1.453316568306076
+     ],
+     [
+      1.5985776228059583,
+      1.7930384729226199,
+      3.1739536711531526,
+      2.751882489493316,
+      2.5293729820401167,
+      2.3868786906186608
+     ],
+     [
+      2.731072279995124,
+      2.934746200997551,
+      3.3048629129213696,
+      2.545784032327221,
+      1.3211579449056745
+     ],
+     [
+      1.8249794557166132,
+      1.366078554687071,
+      2.0755573832971104,
+      1.9510001455434276,
+      1.7461764689861998,
+      1.711884733407093,
+      2.371693518144775,
+      2.2670797195452903
+     ],
+     [
+      4.99030609834302,
+      5.199986209419629,
+      3.460202983499802,
+      6.192412537360781,
+      5.2301433451944,
+      3.4851861058601306,
+      6.137348992111574,
+      1.1694648707929645
+     ],
+     [
+      2.4948803016051695,
+      1.4304994340604198,
+      2.2769560400865085,
+      1.8305614271716335,
+      3.0984637479794523,
+      1.6493312811805192
+     ],
+     [
+      1.6147433690902009,
+      1.8915094185356605,
+      2.401497447138326,
+      1.6900368941024484,
+      2.1987280246446073,
+      2.0913861379920013,
+      2.333323473815211,
+      1.8379027046638847,
+      1.9088007705021712,
+      1.6898420188035783
+     ],
+     [
+      1.8288058460738172,
+      1.7774141067170597,
+      2.0245500010355344,
+      1.6548357639510576,
+      2.2236468928501183
+     ],
+     [
+      1.9846634188135444,
+      1.614821782031309,
+      1.543341595989295,
+      1.9094264620571204,
+      1.8513531917016433,
+      2.2533967341214316
+     ],
+     [
+      1.6982436472324784,
+      1.598287258676195,
+      2.2837971648377264,
+      1.8034406175710482,
+      2.048761779677788
+     ],
+     [
+      2.13182444167539,
+      1.8315581736799427,
+      2.4127959727019386,
+      2.23327567271572,
+      1.5719057306349566
+     ],
+     [
+      2.7409989552092022,
+      2.7710754768333925,
+      5.010601516033314,
+      1.1489126481299998
+     ],
+     [
+      2.0606715938180935,
+      1.3413291889298868,
+      1.8759663383967164,
+      1.7537195887329144,
+      1.8418580823915858,
+      2.1966404677825766,
+      1.779442296915302,
+      2.112191049854985,
+      1.8725122657949937
+     ],
+     [
+      2.77232522799969,
+      3.2892599017427715,
+      3.524710745365874,
+      1.3923660958709785,
+      1.5767279328406933,
+      3.224245831296705
+     ]
+    ],
+    "entropy": [
+     [
+      0.5514829631331888,
+      0.1369617456557925,
+      0.07917187453384218,
+      0.1932372286618623,
+      0.039146188015314234
+     ],
+     [
+      0.6736090968547959,
+      0.028136073328081133,
+      0.21735400658326412,
+      0.08090082323385885
+     ],
+     [
+      0.8448116991827359,
+      0.059873198261275164,
+      0.010513483977486532,
+      0.03158775647205876,
+      0.0532138621064436
+     ],
+     [
+      0.04446192927976371,
+      0.2724165374103415,
+      0.11055819034732071,
+      0.1223540385591716,
+      0.11563597236608365,
+      0.07014599320500692,
+      0.034334932437468865,
+      0.23009240639484302
+     ],
+     [
+      0.27943546002455266,
+      0.3148387299413703,
+      0.13290067209581558,
+      0.20801453737890394,
+      0.06481060055935756
+     ],
+     [
+      0.1202841020710093,
+      0.14895257169112328,
+      0.21262868788580586,
+      0.25530685430592637,
+      0.060234118850265805,
+      0.048229844690938176,
+      0.15436382050493117
+     ],
+     [
+      0.4047317568327646,
+      0.2212906790496372,
+      0.13357278856045335,
+      0.19941583420978512,
+      0.006801362748576862,
+      0.034187578598782895
+     ],
+     [
+      0.17785771874525308,
+      0.43262609927067913,
+      0.1328760169939849,
+      0.2566401649900829
+     ],
+     [
+      0.5623887912140147,
+      0.07040526704639131,
+      0.03538900508143334,
+      0.13236664719957186,
+      0.0552093098592281,
+      0.14424097959936064
+     ],
+     [
+      0.13751971596757864,
+      0.17909033885619485,
+      0.15137297998698815,
+      0.10592959846898191,
+      0.19688380548491052,
+      0.07321905701407272,
+      0.09434130378542073,
+      0.061643200435852474
+     ],
+     [
+      0.21760342652608092,
+      0.06264257602010309,
+      0.1827490412941862,
+      0.36451952791244374,
+      0.03086909200111393,
+      0.04350833543479184,
+      0.09810800081128031
+     ],
+     [
+      0.057898884190907635,
+      0.038941964852224877,
+      0.23381890958034304,
+      0.11716796604324926,
+      0.2805964204821202,
+      0.271575854851155
+     ],
+     [
+      0.42094365763817776,
+      0.3986633517305641,
+      0.18039299063125813
+     ],
+     [
+      0.17946148838205622,
+      0.20414585202851757,
+      0.06861531672692812,
+      0.09622187845415847,
+      0.1369841581465411,
+      0.13348910657177002,
+      0.1810821996900285
+     ],
+     [
+      0.40568883000186584,
+      0.11164813527218372,
+      0.48266303472595046
+     ]
+    ],
+    "critic": [
+     [
+      0.1778120820716854,
+      0.16789086173208193,
+      0.16447650807934128,
+      0.30094382573179024,
+      0.18887672238510114
+     ],
+     [
+      0.3042705414830873,
+      0.18462164355197508,
+      0.23548666401190327,
+      0.2756211509530344
+     ],
+     [
+      0.16457418175601143,
+      0.16770764897162133,
+      0.33530938273105293,
+      0.19677326973776627,
+      0.13563551680354793
+     ],
+     [
+      0.11926684195993849,
+      0.1237596867236747,
+      0.13125423726653557,
+      0.10867170667457862,
+      0.13911104337821392,
+      0.10002772898981548,
+      0.13560335131825246,
+      0.14230540368899083
+     ],
+     [
+      0.14374938568125062,
+      0.2112845131726156,
+      0.18528878857785858,
+      0.2098339035589407,
+      0.2498434090093347
+     ],
+     [
+      0.10071362043181276,
+      0.10238463278795723,
+      0.1586815552341314,
+      0.13639373465983756,
+      0.16631869419733564,
+      0.16187141338855288,
+      0.1736363493003725
+     ],
+     [
+      0.19242558470206972,
+      0.17974963104927594,
+      0.1293749799559185,
+      0.20952587006338974,
+      0.15769528353536003,
+      0.1312286506939862
+     ],
+     [
+      0.16945627945365407,
+      0.17177027671237444,
+      0.2309441336754977,
+      0.42782931015847375
+     ],
+     [
+      0.157003432041533,
+      0.24948924316364143,
+      0.1676752491926968,
+      0.1211002224302237,
+      0.1540992915859476,
+      0.1506325615859576
+     ],
+     [
+      0.12115616364889505,
+      0.11300740133756192,
+      0.1510650916256349,
+      0.14168463848707466,
+      0.1535460023365005,
+      0.09094612728527036,
+      0.10441488421948177,
+      0.12417969105958084
+     ],
+     [
+      0.11120529796727713,
+      0.16228398464586297,
+      0.1963530546547279,
+      0.11171838294494371,
+      0.11428141692938429,
+      0.14704416075797147,
+      0.15711370209983258
+     ],
+     [
+      0.13383471924235404,
+      0.175143196348486,
+      0.18660617058556153,
+      0.17635816400186036,
+      0.19762556585835905,
+      0.13043218396337902
+     ],
+     [
+      0.40552477812149146,
+      0.3689582999137798,
+      0.2255169219647287
+     ],
+     [
+      0.10707581534127625,
+      0.1630485568470483,
+      0.1302943885895966,
+      0.16279222617404335,
+      0.16912038691828227,
+      0.11856284288231912,
+      0.14910578324743406
+     ],
+     [
+      0.355072911749791,
+      0.36137526766047917,
+      0.2835518205897299
+     ]
+    ],
+    "ahp": [
+     [
+      0.38737101163863613,
+      0.44342911417503883,
+      0.16919987418632498
+     ],
+     [
+      0.21923448889543223,
+      0.041846524387730705,
+      0.123455861070297,
+      0.12357979851338566,
+      0.06683188163411632,
+      0.3017335153885394,
+      0.12331793011049866
+     ],
+     [
+      0.19361258581118473,
+      0.17939919902659773,
+      0.10268360994138659,
+      0.20993247089836953,
+      0.15504564225936668,
+      0.0533800965670755,
+      0.10594639549601922
+     ],
+     [
+      0.1050679876409089,
+      0.06865610358690066,
+      0.14500752839832087,
+      0.13300588314299058,
+      0.10899505145903671,
+      0.07756613904659866,
+      0.11899380730878563,
+      0.10135274607111712,
+      0.14135475334534084
+     ],
+     [
+      0.29604304817599963,
+      0.3991876432693867,
+      0.1567940971569281,
+      0.14797521139768546
+     ],
+     [
+      0.15241310479101014,
+      0.1763913242115422,
+      0.08515878320692327,
+      0.08373790895682573,
+      0.16749784055054198,
+      0.23274285486252766,
+      0.10205818342062888
+     ]
+    ]
+   },
+   "pyrepo-mcda": {
+    "topsis": [
+     [
+      0.47353446015233636,
+      0.5833349683105075,
+      0.5826966108347655,
+      0.4544165919686037,
+      0.28916491795269783,
+      0.32410323163882016,
+      0.4955574101763658
+     ],
+     [
+      0.5877391730571853,
+      0.43729440412658627,
+      0.54073480024032,
+      0.3888390193014934,
+      0.40958063813249496,
+      0.49829492530337877
+     ],
+     [
+      0.6963933554596669,
+      0.31266071768681125,
+      0.7409561802047943,
+      0.3493952692817038,
+      0.57062471603466,
+      0.2851290641330588
+     ],
+     [
+      0.5434620781499853,
+      0.5050448115936323,
+      0.6469626912208459,
+      0.4502911800465123,
+      0.3256997422380831
+     ],
+     [
+      0.25414072020264944,
+      0.24210669161012896,
+      0.49651465268445094,
+      0.38223342973145225,
+      0.3651610201879308,
+      0.2406112293707244,
+      0.38657255660026274,
+      0.5273207857606108
+     ],
+     [
+      0.5483718043697057,
+      0.6024644358959378,
+      0.47380197951208775,
+      0.7268046610731013,
+      0.7057360632063161,
+      0.3489875401802783,
+      0.7624239324487471,
+      0.08551997463971968
+     ],
+     [
+      0.42422276712928514,
+      0.3217329256423579,
+      0.4452858746328727,
+      0.33533275279177005,
+      0.8076250244090675,
+      0.29707930718863457
+     ],
+     [
+      0.7095045040953011,
+      0.6872079437963844,
+      0.7444096008878157,
+      0.57282837400462,
+      0.6902111886638732,
+      0.6611116747300941,
+      0.6197529975603353,
+      0.7068618405435829,
+      0.7209526160445102,
+      0.29049549590469886
+     ],
+     [
+      0.41222261536494537,
+      0.5562852909392701,
+      0.4922982980351492,
+      0.49870937684293376,
+      0.5262937126498112
+     ],
+     [
+      0.5091894860330911,
+      0.3604115598652414,
+      0.5743150130891497,
+      0.7089050871835629,
+      0.7610597831867999,
+      0.7553073317186024
+     ],
+     [
+      0.438768140720226,
+      0.39766515178048784,
+      0.5420888442643494,
+      0.44159882646471593,
+      0.6461255774181455
+     ],
+     [
+      0.5154133576746723,
+      0.5172289807794913,
+      0.7061997618985211,
+      0.5105244141049797,
+      0.3286795702124708
+     ],
+     [
+      0.4956606245394467,
+      0.3281315674190235,
+      0.9970388428475255,
+      0.25120534588262383
+     ],
+     [
+      0.5718992012310888,
+      0.5244203451526275,
+      0.4584668129356794,
+      0.4553489770286491,
+      0.522098864019846,
+      0.6189691008733658,
+      0.5621838261708526,
+      0.5866978150628507,
+      0.5505910250424956
+     ],
+     [
+      0.9089856659017864,
+      0.9115476808770058,
+      0.986744006174367,
+      0.3919209859370294,
+      0.2172289377083785,
+      0.9035856768796022
+     ]
+    ],
+    "topsis/vector": [
+     [
+      0.41582244292965376,
+      0.6370074714749798,
+      0.563925692689192,
+      0.49318257542743,
+      0.30681991342312637,
+      0.3343740193261911,
+      0.47527500573551384
+     ],
+     [
+      0.7834608615161808,
+      0.4715621830184011,
+      0.3363146699932726,
+      0.25082633177142516,
+      0.19836750675302744,
+      0.39896279560955233
+     ],
+     [
+      0.9223426382067134,
+      0.2851495205591721,
+      0.7856796110234177,
+      0.16160546225260256,
+      0.5723580204648567,
+      0.06857902220621571
+     ],
+     [
+      0.6117940554789836,
+      0.5261516795117213,
+      0.6168159233739324,
+      0.46849377596160946,
+      0.2888453019269735
+     ],
+     [
+      0.2261655748919281,
+      0.23104085428555715,
+      0.44528223811041884,
+      0.41236739985679427,
+      0.37394843174754544,
+      0.19089885418084612,
+      0.4145950830100684,
+      0.5810470667957242
+     ],
+     [
+      0.5946888972563463,
+      0.5505986181307795,
+      0.45221031848793597,
+      0.7287779880157546,
+      0.5676881745445514,
+      0.4363516185795649,
+      0.6932384617842878,
+      0.14700634535449486
+     ],
+     [
+      0.30747246765708647,
+      0.2536310946015863,
+      0.32717597113383873,
+      0.26232561756376577,
+      0.856252961640438,
+      0.1913648181004665
+     ],
+     [
+      0.7345942075418502,
+      0.7193359722595704,
+      0.7513197726301682,
+      0.5744242740608186,
+      0.7153816044569533,
+      0.6727388411985716,
+      0.5987933768110242,
+      0.7143667943816078,
+      0.7104767554284187,
+      0.26540579245814977
+     ],
+     [
+      0.3395585143121364,
+      0.6075774599089079,
+      0.5615035322154875,
+      0.5921199398520423,
+      0.6135508024217539
+     ],
+     [
+      0.5210807679267009,
+      0.3654742480130736,
+      0.5698948880450267,
+      0.7536106273779766,
+      0.7975623350908713,
+      0.7862964858049086
+     ],
+     [
+      0.4566186498804143,
+      0.4022431502483436,
+      0.450439177880038,
+      0.42178580226034307,
+      0.6062201966334967
+     ],
+     [
+      0.4538927984851004,
+      0.4507540897313025,
+      0.7651837765857985,
+      0.5513486499156754,
+      0.3069187200544289
+     ],
+     [
+      0.5442994838457835,
+      0.3005377745371953,
+      0.996692621462312,
+      0.21174099426025828
+     ],
+     [
+      0.5919518167052156,
+      0.5452939957436583,
+      0.48017192064307457,
+      0.5024385317244807,
+      0.4817614712435843,
+      0.6055478815120274,
+      0.5850656822036433,
+      0.5780694225042999,
+      0.5781339167949817
+     ],
+     [
+      0.9289408109164805,
+      0.9094731918398083,
+      0.9865870294912344,
+      0.38891752301704496,
+      0.2283831209391611,
+      0.907720117685713
+     ]
+    ],
+    "vikor": [
+     [
+      0.6952986236435875,
+      0.2701112987664829,
+      0.0,
+      0.48289046621374754,
+      1.0,
+      0.9645732205218179,
+      0.3855374788248158
+     ],
+     [
+      0.12368050668543264,
+      0.8509951995494134,
+      0.1557145001028272,
+      0.911250079969292,
+      0.8150137926856782,
+      0.5308114937072648
+     ],
+     [
+      0.23462185049111225,
+      0.8181818181818181,
+      0.0,
+      0.6373788772409114,
+      0.3098200023856484,
+      0.8598550916783112
+     ],
+     [
+      0.6460259929613772,
+      0.21056343862328775,
+      0.2916666666666666,
+      0.3732123418277843,
+      0.9702380952380952
+     ],
+     [
+      0.9012721130940758,
+      1.0,
+      0.5199408364900223,
+      0.2256511891279728,
+      0.6120629834140636,
+      0.9725246026477137,
+      0.15655875346584916,
+      0.0
+     ],
+     [
+      0.5889737561135863,
+      0.3677066860631304,
+      0.7690443638164666,
+      0.125,
+      0.15143487904675057,
+      0.8034358625475961,
+      0.006698312014290305,
+      1.0
+     ],
+     [
+      0.7855453256690306,
+      0.9907948000667434,
+      0.7438000632706812,
+      0.940107808956407,
+      0.0,
+      1.0
+     ],
+     [
+      0.19879584017515056,
+      0.22753147235905868,
+      0.0,
+      0.41026272577996714,
+      0.1837027914614122,
+      0.2495073891625616,
+      0.19359605911330052,
+      0.1983579638752053,
+      0.1478106185002737,
+      1.0
+     ],
+     [
+      0.563157894736842,
+      0.2345003228352105,
+      0.313156195604155,
+      0.40056675514742796,
+      0.5
+     ],
+     [
+      0.5510268628796275,
+      1.0,
+      0.7049680480626718,
+      0.08162665294560914,
+      0.03662429265579521,
+      0.0
+     ],
+     [
+      0.8602305477524135,
+      0.7551189340397856,
+      0.29476873276214965,
+      0.6057110505048242,
+      0.0
+     ],
+     [
+      0.5979181720612305,
+      0.38152617458171006,
+      0.0,
+      0.3624272752032296,
+      1.0
+     ],
+     [
+      0.6612496321019139,
+      0.8109630240429612,
+      0.0,
+      1.0
+     ],
+     [
+      0.43891868094040287,
+      0.6273391834042031,
+      0.7403234410618603,
+      1.0,
+      0.709271853086284,
+      0.2433228210378128,
+      0.3842920723124805,
+      0.26747235294474125,
+      0.5576541675905005
+     ],
+     [
+      0.09896194010272487,
+      0.1006988983686668,
+      0.0,
+      0.7421996995523876,
+      1.0,
+      0.10989418902752146
+     ]
+    ],
+    "codas": [
+     [
+      0.5121764914884954,
+      1.463300034504913,
+      1.0715325899642418,
+      -0.21246799780012637,
+      -1.8515205523193041,
+      -1.1716767695713806,
+      0.18865620373316055
+     ],
+     [
+      1.3913790737629108,
+      0.3411294975357321,
+      -0.21703810997124345,
+      -0.5381355183013501,
+      -0.7291853807341694,
+      -0.24814956229188
+     ],
+     [
+      1.392700636801411,
+      -0.6738669550310756,
+      0.9864544045149053,
+      -0.8250019554034312,
+      0.3188178394349862,
+      -1.1991039703167956
+     ],
+     [
+      0.5509565419741853,
+      0.0707918471972758,
+      1.27384989120492,
+      -0.9325817366897317,
+      -0.9630165436866496
+     ],
+     [
+      -0.6848092126936289,
+      -0.727346592169494,
+      0.7112375998483984,
+      0.17288253642402315,
+      0.06220963164451056,
+      -0.8363542750714003,
+      0.22705897430673155,
+      1.0751213377108595
+     ],
+     [
+      0.8944177071390262,
+      0.23553748620345033,
+      -0.48131516452483675,
+      0.9773779834316435,
+      0.7130616204397647,
+      -0.7654914808803341,
+      0.7702175343685711,
+      -2.343805686177285
+     ],
+     [
+      0.10201729924955455,
+      -0.6216672620838805,
+      0.25486917809279774,
+      -0.5136286614737128,
+      1.8199397243436277,
+      -1.0415302781283866
+     ],
+     [
+      3.530875074809877,
+      0.7207988926655182,
+      0.514869345414367,
+      -2.089776264617064,
+      -0.5178022108808041,
+      -0.953328551922021,
+      -0.7047387126800475,
+      0.49632329616371396,
+      0.20600002212447302,
+      -1.2032208910780127
+     ],
+     [
+      -0.4820070984657866,
+      0.2997274361214692,
+      -0.3241218011376193,
+      0.1577241031395631,
+      0.3486773603423736
+     ],
+     [
+      -1.1491822741572577,
+      -0.9967115577309233,
+      -0.41995005894658055,
+      0.9476261592654367,
+      1.6495590076970135,
+      -0.031341276127688666
+     ],
+     [
+      0.17397078788763384,
+      -0.8110220466628006,
+      -0.12185315578616349,
+      -0.2781093414725665,
+      1.0370137560338968
+     ],
+     [
+      0.45590445506002536,
+      -0.0983407208122643,
+      1.303012773464034,
+      -0.2827064701752143,
+      -1.377870037536581
+     ],
+     [
+      0.10128955983752402,
+      -0.7118200913767849,
+      1.8254816535992917,
+      -1.2149511220600306
+     ],
+     [
+      -0.3275177393411981,
+      -0.17290736531718767,
+      -1.1857929267784235,
+      -0.7435877873643093,
+      0.1338489043783477,
+      1.3878465751367695,
+      0.4837823418799717,
+      0.039063820706779245,
+      0.3852641766992505
+     ],
+     [
+      2.3623816912888422,
+      1.6262443705334975,
+      2.6007630327110345,
+      -4.332787349486174,
+      -3.029108524002638,
+      0.7725067789554391
+     ]
+    ],
+    "waspas": [
+     [
+      0.45496412677931686,
+      0.6049194974348961,
+      0.6427691199793943,
+      0.4866899892345974,
+      0.30873881762202005,
+      0.3450841328186709,
+      0.5280854898753125
+     ],
+     [
+      0.8882068820640778,
+      0.7798737865274857,
+      0.7375220756473126,
+      0.6605725591612455,
+      0.6586493338648873,
+      0.7040079752732821
+     ],
+     [
+      0.9517284964385908,
+      0.7793067515629248,
+      0.936235928227103,
+      0.7746449234227064,
+      0.876302600765174,
+      0.7290810534538468
+     ],
+     [
+      0.5450928373502482,
+      0.4688518472582882,
+      0.6497445472499849,
+      0.34878291460674016,
+      0.28580902947955744
+     ],
+     [
+      0.6656766395695906,
+      0.6549362397898846,
+      0.7505949607432654,
+      0.7360792845893229,
+      0.7117971843968851,
+      0.6423573987915406,
+      0.7488813721972125,
+      0.7718422328829566
+     ],
+     [
+      0.8314964278286379,
+      0.7886440941803523,
+      0.6999031337300288,
+      0.8792421446129148,
+      0.7913361847240176,
+      0.7022114577796628,
+      0.8650851582758832,
+      0.5671385538922666
+     ],
+     [
+      0.7459997811759158,
+      0.6555355975785919,
+      0.7698012362485047,
+      0.678371741099013,
+      0.9433365553241277,
+      0.6246357044922493
+     ],
+     [
+      0.6483488313064133,
+      0.5720862489547713,
+      0.6289587614995915,
+      0.45650032271231944,
+      0.5509907589912142,
+      0.5029591992755342,
+      0.5583518890709149,
+      0.5385386984433256,
+      0.5383680877544966,
+      0.45984597093205093
+     ],
+     [
+      0.5622247166368757,
+      0.657539287718407,
+      0.619222420206259,
+      0.640926080363784,
+      0.7227871141181288
+     ],
+     [
+      0.38406634355184055,
+      0.3841922127572929,
+      0.39358061345828277,
+      0.5901420810789357,
+      0.6123299296556366,
+      0.5237737716966029
+     ],
+     [
+      0.5381946221746173,
+      0.39235915325067494,
+      0.5354924867833708,
+      0.4586491298074594,
+      0.6281010120712394
+     ],
+     [
+      0.6041955772711296,
+      0.5423325809971636,
+      0.7484133972693847,
+      0.550303437572135,
+      0.35618203346425786
+     ],
+     [
+      0.6986817257744962,
+      0.6124400907229883,
+      0.9974217744618019,
+      0.5080927904444339
+     ],
+     [
+      0.5178751794882157,
+      0.43766149679401356,
+      0.4456098652394285,
+      0.4857385340520606,
+      0.5222005868501146,
+      0.6222301890299626,
+      0.5422034135263469,
+      0.5157464985575273,
+      0.5552240100055355
+     ],
+     [
+      0.8320616814764884,
+      0.7803641637154946,
+      0.943389697656801,
+      0.27283253654714584,
+      0.3476462938455229,
+      0.7184697742785091
+     ]
+    ],
+    "edas": [
+     [
+      0.4312612389142812,
+      0.8919280267251798,
+      0.8011066601932308,
+      0.5496972196202383,
+      0.13247869655623895,
+      0.18494059399095103,
+      0.5706575621223349
+     ],
+     [
+      0.9287759026880159,
+      0.5439361412529843,
+      0.36744137717356967,
+      0.06760594559483615,
+      0.07131437855540586,
+      0.24428847823178423
+     ],
+     [
+      0.9021366955316215,
+      0.2393621151876163,
+      0.8289057782584305,
+      0.21065934692585706,
+      0.6132586443920948,
+      0.041341650273076534
+     ],
+     [
+      0.8415076704343105,
+      0.6325045145804095,
+      0.8821389476240826,
+      0.45595283292005906,
+      0.10349529450952259
+     ],
+     [
+      0.1721985604463897,
+      0.1526657348220416,
+      0.5810885488729156,
+      0.5579805960088299,
+      0.37088075692348577,
+      0.06651981864074039,
+      0.5832318127926965,
+      0.7326541581724396
+     ],
+     [
+      0.8289578397354609,
+      0.6198955375017936,
+      0.37375542630520375,
+      0.8905665723078584,
+      0.6626222036793818,
+      0.3954863097274427,
+      0.8394938726990695,
+      0.039856422121218864
+     ],
+     [
+      0.41414073355791703,
+      0.12999419821568695,
+      0.46069425800866226,
+      0.2120060994906317,
+      0.9443396358125862,
+      0.04295784618044415
+     ],
+     [
+      0.7869570456510713,
+      0.7154205361266021,
+      0.7815280106251584,
+      0.4649165753643956,
+      0.6286437047616236,
+      0.5156065229062327,
+      0.6866846375457083,
+      0.63821419989311,
+      0.6310361231893296,
+      0.5
+     ],
+     [
+      0.13890651629981507,
+      0.650240115042978,
+      0.5697359595170038,
+      0.5541084331976946,
+      0.8445249671984897
+     ],
+     [
+      0.46293521793244874,
+      0.3228659576120077,
+      0.3472517398669995,
+      0.8892575340520014,
+      0.8577853559052012,
+      0.8481942893271922
+     ],
+     [
+      0.3035101242845501,
+      0.15992078672701437,
+      0.4359309374412609,
+      0.2362123964666462,
+      0.5
+     ],
+     [
+      0.5293955368768423,
+      0.30504641176242847,
+      0.8691319180946546,
+      0.48598144628089,
+      0.11432401097702641
+     ],
+     [
+      0.4574224228132803,
+      0.27621902568228335,
+      1.0,
+      0.0022203464449258416
+     ],
+     [
+      0.5866388150511118,
+      0.34191157445225034,
+      0.32160423530776794,
+      0.37016070102136994,
+      0.38301620194413627,
+      0.7644584424818028,
+      0.44386681929876115,
+      0.6052965493682599,
+      0.5393849636912765
+     ],
+     [
+      0.901265744700812,
+      0.8519598540050718,
+      1.0,
+      0.14124708991624135,
+      0.1360122104934976,
+      0.8188651578709205
+     ]
+    ],
+    "marcos": [
+     [
+      0.5106927836965686,
+      0.6190544279992037,
+      0.6435538917478693,
+      0.4834454920811418,
+      0.33697334801748063,
+      0.38816265291263247,
+      0.5422908174508477
+     ],
+     [
+      0.7408368228254545,
+      0.6559689735432402,
+      0.6265146681728797,
+      0.572718144092339,
+      0.569084207689352,
+      0.5954832506836163
+     ],
+     [
+      0.7376233972094096,
+      0.6074926153404345,
+      0.72530945863209,
+      0.6095147718894484,
+      0.6801346974790736,
+      0.5778251573016339
+     ],
+     [
+      0.5688304228317019,
+      0.49676999835513796,
+      0.6813725386507579,
+      0.3762750360572466,
+      0.3344081873799061
+     ],
+     [
+      0.5648977356434653,
+      0.5543439120998118,
+      0.6409972121046248,
+      0.6173560758287643,
+      0.6015437149513647,
+      0.5452857866274469,
+      0.6282410555850054,
+      0.6542775809699067
+     ],
+     [
+      0.7170795078947184,
+      0.6737560399340019,
+      0.6011818514661141,
+      0.744376492564299,
+      0.6884412466697074,
+      0.5972762618942011,
+      0.7329338592939967,
+      0.4874164948993796
+     ],
+     [
+      0.6389968876655624,
+      0.5591242560878722,
+      0.6606734371381665,
+      0.5787603277250295,
+      0.7923089295099993,
+      0.5336374216086819
+     ],
+     [
+      0.6874635775373295,
+      0.5729951938633385,
+      0.6060833184256561,
+      0.4498066613362243,
+      0.5291047588634189,
+      0.4897907088012763,
+      0.5520079829677901,
+      0.5498402069311868,
+      0.5469367602939265,
+      0.49297108081108226
+     ],
+     [
+      0.5563937554101388,
+      0.6321466144776839,
+      0.5860012747911283,
+      0.6102765037938306,
+      0.6815419681439184
+     ],
+     [
+      0.39779408049302023,
+      0.4152463239444094,
+      0.4207377422632601,
+      0.6097687870934133,
+      0.6376756344042067,
+      0.5256040177394895
+     ],
+     [
+      0.5673852167881781,
+      0.43806391729488925,
+      0.5589980675200753,
+      0.5009052225843272,
+      0.6665424028275495
+     ],
+     [
+      0.6566377351787853,
+      0.5758460372476881,
+      0.7391392132459195,
+      0.5456399018072753,
+      0.3993358497305066
+     ],
+     [
+      0.6329484844856446,
+      0.5532650081236478,
+      0.8867809960400498,
+      0.46356847152631897
+     ],
+     [
+      0.5200943256511341,
+      0.47238902191148174,
+      0.4512059837356798,
+      0.4852815021171204,
+      0.549316206747285,
+      0.649054366421198,
+      0.5579241188604056,
+      0.5372411832681208,
+      0.573189941353473
+     ],
+     [
+      0.8281406229927097,
+      0.7769712618585205,
+      0.9135641222901449,
+      0.2692744399705831,
+      0.3853881563802931,
+      0.7079663725555383
+     ]
+    ],
+    "copras": [
+     [
+      0.8146593082950788,
+      1.0,
+      0.9527727315343507,
+      0.7714024712352916,
+      0.4680313247531791,
+      0.5329187617143494,
+      0.787103622602532
+     ],
+     [
+      1.0,
+      0.8504171064571553,
+      0.7911651685798544,
+      0.7130906341406612,
+      0.7048142290846523,
+      0.7693367594872972
+     ],
+     [
+      1.0,
+      0.8021821951695884,
+      0.9724070988223672,
+      0.7964830243480338,
+      0.9059215013168188,
+      0.7503121690604015
+     ],
+     [
+      0.8291288763052967,
+      0.6841114992912634,
+      1.0,
+      0.567157123750654,
+      0.3635024596154769
+     ],
+     [
+      0.8369882779319223,
+      0.820554634612823,
+      0.9593123316629611,
+      0.9255832314076655,
+      0.8971780045222252,
+      0.8033652681874759,
+      0.944079572551617,
+      1.0
+     ],
+     [
+      0.9654554145115111,
+      0.8950154158457563,
+      0.7886077536367297,
+      1.0,
+      0.9122293894897764,
+      0.802782240304132,
+      0.982970144145623,
+      0.6463070489025515
+     ],
+     [
+      0.7556284210765084,
+      0.6693080179913167,
+      0.7828189609547878,
+      0.6930747143979317,
+      1.0,
+      0.6484743762204527
+     ],
+     [
+      1.0,
+      0.8510913439837874,
+      0.9225102150023919,
+      0.6939173963705346,
+      0.8105706561482328,
+      0.728291644521028,
+      0.8413610683110138,
+      0.8001859550088142,
+      0.7947863200713428,
+      0.8083592129103686
+     ],
+     [
+      0.7998617404998714,
+      0.9173444073074501,
+      0.8549424338633843,
+      0.8935860048306765,
+      1.0
+     ],
+     [
+      0.6224584970097292,
+      0.5849930252625508,
+      0.5089334564589686,
+      1.0,
+      0.9033390239779303,
+      0.8496879113335059
+     ],
+     [
+      0.6629771591617327,
+      0.5749755674811612,
+      0.7251837235301553,
+      0.6055657328116385,
+      1.0
+     ],
+     [
+      0.8538897040984991,
+      0.6858076693537117,
+      1.0,
+      0.7285048859784621,
+      0.47964782843110876
+     ],
+     [
+      0.7173869452557886,
+      0.6129128087276429,
+      1.0,
+      0.5151277544317961
+     ],
+     [
+      0.8904672401046017,
+      0.8169351300290331,
+      0.7245143223265615,
+      0.7761645708083876,
+      0.900425654397796,
+      1.0,
+      0.8031887029723667,
+      0.9147005967459398,
+      0.9090112798146911
+     ],
+     [
+      0.8546982528358911,
+      0.7683044157660712,
+      1.0,
+      0.28262117099317347,
+      0.2817807231129987,
+      0.7344141167156978
+     ]
+    ],
+    "cocoso": [
+     [
+      2.0413128390265998,
+      2.787989783418825,
+      2.882349795597249,
+      2.4160457689259287,
+      1.2986918936013303,
+      1.443142907339168,
+      2.519094173200623
+     ],
+     [
+      2.5779555842052653,
+      1.8991527576322798,
+      2.364681486064278,
+      1.716620628763005,
+      1.949669322003008,
+      1.453316568306076
+     ],
+     [
+      1.5985776228059583,
+      1.7930384729226199,
+      3.1739536711531526,
+      2.751882489493316,
+      2.5293729820401167,
+      2.3868786906186608
+     ],
+     [
+      2.731072279995124,
+      2.934746200997551,
+      3.3048629129213696,
+      2.545784032327221,
+      1.3211579449056745
+     ],
+     [
+      1.8249794557166132,
+      1.366078554687071,
+      2.0755573832971104,
+      1.9510001455434276,
+      1.7461764689861998,
+      1.711884733407093,
+      2.371693518144775,
+      2.2670797195452903
+     ],
+     [
+      4.99030609834302,
+      5.199986209419629,
+      3.460202983499802,
+      6.192412537360781,
+      5.2301433451944,
+      3.4851861058601306,
+      6.137348992111574,
+      1.1694648707929645
+     ],
+     [
+      2.4948803016051695,
+      1.4304994340604198,
+      2.2769560400865085,
+      1.8305614271716335,
+      3.0984637479794523,
+      1.6493312811805192
+     ],
+     [
+      1.6147433690902009,
+      1.8915094185356605,
+      2.401497447138326,
+      1.6900368941024484,
+      2.1987280246446073,
+      2.0913861379920013,
+      2.333323473815211,
+      1.8379027046638847,
+      1.9088007705021712,
+      1.6898420188035783
+     ],
+     [
+      1.8288058460738172,
+      1.7774141067170597,
+      2.0245500010355344,
+      1.6548357639510576,
+      2.2236468928501183
+     ],
+     [
+      1.9846634188135444,
+      1.614821782031309,
+      1.543341595989295,
+      1.9094264620571204,
+      1.8513531917016433,
+      2.2533967341214316
+     ],
+     [
+      1.6982436472324784,
+      1.598287258676195,
+      2.2837971648377264,
+      1.8034406175710482,
+      2.048761779677788
+     ],
+     [
+      2.13182444167539,
+      1.8315581736799427,
+      2.4127959727019386,
+      2.23327567271572,
+      1.5719057306349566
+     ],
+     [
+      2.7409989552092022,
+      2.7710754768333925,
+      5.010601516033314,
+      1.1489126481299998
+     ],
+     [
+      2.0606715938180935,
+      1.3413291889298868,
+      1.8759663383967164,
+      1.7537195887329144,
+      1.8418580823915858,
+      2.1966404677825766,
+      1.779442296915302,
+      2.112191049854985,
+      1.8725122657949937
+     ],
+     [
+      2.77232522799969,
+      3.2892599017427715,
+      3.524710745365874,
+      1.3923660958709785,
+      1.5767279328406933,
+      3.224245831296705
+     ]
+    ],
+    "entropy": [
+     [
+      0.551482963133189,
+      0.13696174565579253,
+      0.07917187453384221,
+      0.19323722866186221,
+      0.039146188015314075
+     ],
+     [
+      0.6736090968547931,
+      0.028136073328082628,
+      0.21735400658326434,
+      0.08090082323385998
+     ],
+     [
+      0.8448116991827195,
+      0.05987319826128043,
+      0.010513483977493169,
+      0.03158775647205789,
+      0.05321386210644905
+     ],
+     [
+      0.044461929279763626,
+      0.27241653741034155,
+      0.11055819034732073,
+      0.12235403855917162,
+      0.11563597236608367,
+      0.07014599320500683,
+      0.03433493243746887,
+      0.23009240639484307
+     ],
+     [
+      0.27943546002454966,
+      0.3148387299413669,
+      0.13290067209581627,
+      0.208014537378906,
+      0.06481060055936115
+     ],
+     [
+      0.1202841020710094,
+      0.14895257169112341,
+      0.21262868788580766,
+      0.2553068543059258,
+      0.06023411885026423,
+      0.04822984469093822,
+      0.15436382050493128
+     ],
+     [
+      0.4047317568327627,
+      0.221290679049637,
+      0.13357278856045396,
+      0.1994158342097833,
+      0.006801362748578634,
+      0.034187578598784414
+     ],
+     [
+      0.17785771874525375,
+      0.4326260992706782,
+      0.13287601699398566,
+      0.2566401649900824
+     ],
+     [
+      0.5623887912140147,
+      0.07040526704639136,
+      0.03538900508143336,
+      0.13236664719957195,
+      0.055209309859227854,
+      0.14424097959936072
+     ],
+     [
+      0.1375197159675787,
+      0.17909033885619483,
+      0.15137297998698798,
+      0.10592959846898198,
+      0.19688380548491047,
+      0.07321905701407264,
+      0.09434130378542081,
+      0.06164320043585259
+     ],
+     [
+      0.21760342652608097,
+      0.0626425760201031,
+      0.18274904129418626,
+      0.3645195279124437,
+      0.03086909200111394,
+      0.04350833543479172,
+      0.09810800081128034
+     ],
+     [
+      0.05789888419090765,
+      0.03894196485222488,
+      0.2338189095803429,
+      0.11716796604324928,
+      0.28059642048212025,
+      0.27157585485115504
+     ],
+     [
+      0.42094365763817826,
+      0.3986633517305637,
+      0.180392990631258
+     ],
+     [
+      0.17946148838205614,
+      0.20414585202851745,
+      0.06861531672692808,
+      0.09622187845415843,
+      0.13698415814654102,
+      0.13348910657176993,
+      0.18108219969002892
+     ],
+     [
+      0.40568883000186595,
+      0.11164813527218402,
+      0.48266303472595007
+     ]
+    ],
+    "critic": [
+     [
+      0.17781208207168536,
+      0.16789086173208193,
+      0.1644765080793413,
+      0.3009438257317903,
+      0.18887672238510117
+     ],
+     [
+      0.3042705414830873,
+      0.18462164355197508,
+      0.23548666401190319,
+      0.27562115095303447
+     ],
+     [
+      0.16457418175601138,
+      0.16770764897162133,
+      0.335309382731053,
+      0.1967732697377663,
+      0.13563551680354793
+     ],
+     [
+      0.11926684195993847,
+      0.1237596867236747,
+      0.13125423726653554,
+      0.1086717066745786,
+      0.1391110433782139,
+      0.10002772898981543,
+      0.13560335131825244,
+      0.14230540368899083
+     ],
+     [
+      0.1437493856812506,
+      0.21128451317261557,
+      0.18528878857785852,
+      0.2098339035589407,
+      0.24984340900933463
+     ],
+     [
+      0.10071362043181278,
+      0.10238463278795724,
+      0.15868155523413144,
+      0.1363937346598376,
+      0.16631869419733566,
+      0.1618714133885529,
+      0.17363634930037253
+     ],
+     [
+      0.1924255847020697,
+      0.17974963104927588,
+      0.12937497995591848,
+      0.2095258700633897,
+      0.15769528353536005,
+      0.13122865069398618
+     ],
+     [
+      0.1694562794536541,
+      0.1717702767123745,
+      0.23094413367549774,
+      0.42782931015847375
+     ],
+     [
+      0.15700343204153297,
+      0.2494892431636414,
+      0.16767524919269677,
+      0.12110022243022368,
+      0.15409929158594757,
+      0.15063256158595753
+     ],
+     [
+      0.12115616364889503,
+      0.11300740133756193,
+      0.1510650916256349,
+      0.14168463848707466,
+      0.15354600233650048,
+      0.09094612728527035,
+      0.10441488421948177,
+      0.12417969105958084
+     ],
+     [
+      0.1112052979672771,
+      0.1622839846458629,
+      0.1963530546547279,
+      0.11171838294494371,
+      0.11428141692938427,
+      0.14704416075797144,
+      0.15711370209983255
+     ],
+     [
+      0.13383471924235404,
+      0.17514319634848596,
+      0.1866061705855615,
+      0.17635816400186038,
+      0.19762556585835905,
+      0.130432183963379
+     ],
+     [
+      0.4055247781214914,
+      0.3689582999137798,
+      0.2255169219647287
+     ],
+     [
+      0.10707581534127623,
+      0.16304855684704833,
+      0.1302943885895966,
+      0.16279222617404338,
+      0.1691203869182823,
+      0.11856284288231916,
+      0.1491057832474341
+     ],
+     [
+      0.355072911749791,
+      0.36137526766047917,
+      0.2835518205897299
+     ]
+    ],
+    "ahp": [
+     [
+      0.38737101163863624,
+      0.44342911417503894,
+      0.16919987418632484
+     ],
+     [
+      0.21923448889543212,
+      0.04184652438773072,
+      0.12345586107029717,
+      0.12357979851338574,
+      0.06683188163411637,
+      0.3017335153885394,
+      0.12331793011049846
+     ],
+     [
+      0.1936125858111849,
+      0.17939919902659782,
+      0.1026836099413866,
+      0.20993247089836933,
+      0.15504564225936676,
+      0.05338009656707539,
+      0.10594639549601917
+     ],
+     [
+      0.10506798764090859,
+      0.06865610358690066,
+      0.145007528398321,
+      0.13300588314299064,
+      0.10899505145903671,
+      0.0775661390465987,
+      0.11899380730878568,
+      0.10135274607111723,
+      0.14135475334534092
+     ],
+     [
+      0.29604304817599975,
+      0.3991876432693867,
+      0.15679409715692796,
+      0.14797521139768552
+     ],
+     [
+      0.1524131047910101,
+      0.17639132421154222,
+      0.0851587832069233,
+      0.08373790895682577,
+      0.16749784055054204,
+      0.23274285486252774,
+      0.10205818342062889
+     ]
+    ]
+   }
+  }
+ }
+}
