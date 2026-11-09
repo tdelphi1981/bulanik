@@ -12,3 +12,6 @@ build/
 /site/
 /.cache/
 /benchmarks/.cache/
+
+# local secrets
+.env
