@@ -131,15 +131,28 @@ synonym `defuzzify(method)`) offers three, the default being the centroid:
   weights the peak four times, so it stays closer to $m$.</figcaption>
 </figure>
 
-The only distance is `"vertex"` (Chen 2000): the root mean square of the point
-differences,
+There are three distances. The default, `"vertex"` (Chen 2000), is the root mean
+square of the point differences,
 
 $$
 d(A, B) = \sqrt{\tfrac{1}{n} \sum_{i=1}^{n} (x_i - y_i)^2},
 $$
 
 with $n = 3$ for triangles and $n = 4$ for trapezoids. Fuzzy TOPSIS
-([`fuzzy_topsis`][bulanik.mcdm.fuzzy_topsis]) uses it. Triangular numbers have
+([`fuzzy_topsis`][bulanik.mcdm.fuzzy_topsis]) uses it. `"euclidean"` and
+`"hamming"` are the weighted distances of Li (2007) that fuzzy CODAS
+([`fuzzy_codas`][bulanik.mcdm.fuzzy_ranking.fuzzy_codas]) uses. For trapezoids
+$M = (m_1, m_2, m_3, m_4)$ and $N = (n_1, n_2, n_3, n_4)$ the core points count twice,
+
+$$
+d_E(M, N) = \sqrt{\tfrac16\left[(m_1 - n_1)^2 + 2(m_2 - n_2)^2 + 2(m_3 - n_3)^2 + (m_4 - n_4)^2\right]},
+\qquad
+d_H(M, N) = \tfrac16\left[|m_1 - n_1| + 2|m_2 - n_2| + 2|m_3 - n_3| + |m_4 - n_4|\right],
+$$
+
+and a triangle $(l, m, u)$ counts as the trapezoid $(l, m, m, u)$, so its peak
+weighs $4/6$: $d_H = \tfrac16(|\Delta l| + 4|\Delta m| + |\Delta u|)$. A `TFN` and
+its `to_trfn()` have the same Euclidean and Hamming distances. Triangular numbers have
 **no accuracy function**: ties between equal scores are not broken by a second
 quantity.
 
@@ -154,6 +167,8 @@ print(a.score() == a.score("centroid"), a.defuzzify("graded_mean") == a.score("g
 t = TrFN(1, 2, 3, 5)
 print({m: round(t.score(m), 4) for m in TrFN.SCORES})
 print(TFN(1, 2, 4).distance(TFN(2, 3, 5)))           # sqrt(((1-2)^2 + (2-3)^2 + (4-5)^2) / 3)
+a, b = TFN(1, 2, 3), TFN(2, 3, 5)
+print(TFN.DISTANCES, round(a.distance(b, "euclidean"), 4), round(a.distance(b, "hamming"), 4))
 ```
 
 ## Drawing them

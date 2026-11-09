@@ -397,9 +397,9 @@ neutrosophic variants of these methods do.
 |---|---|---|
 | Call | `rank_fuzzy(dm, w, t, method="codas")` | [`fuzzy_codas`][bulanik.mcdm.fuzzy_ranking.fuzzy_codas], [`fuzzy_waspas`][bulanik.mcdm.fuzzy_ranking.fuzzy_waspas], [`fuzzy_cocoso`][bulanik.mcdm.fuzzy_ranking.fuzzy_cocoso], or `rank_fuzzy(dm, w, t, method="fuzzy_codas")` |
 | Input | a `DecisionMatrix` of experts | an aggregated matrix of one number kind, or a `DecisionMatrix` through `rank_fuzzy` |
-| Cost criterion | the crisp method's own treatment of the scores | the kind's `complement()`, so $(\mu, \nu) \mapsto (\nu, \mu)$ for an orthopair number |
+| Cost criterion | the crisp method's own treatment of the scores | the kind's `complement()`, so $(\mu, \nu) \mapsto (\nu, \mu)$ for an orthopair number; for `fuzzy_codas` on `TFN` and `TrFN`, the normalisation $1 - \tilde x / \max D$ |
 | Score | needs positive values for the ratio methods | picks the negative-ideal (CODAS) or scores the final numbers |
-| Kinds | every kind with a suitable score | a cost criterion needs `complement()`, which `TFN`, `TrFN` and `IT2TrFN` lack; `fuzzy_codas` also needs the `euclidean` and `hamming` distances, which those three lack too |
+| Kinds | every kind with a suitable score | `fuzzy_waspas` and `fuzzy_cocoso`: a cost criterion needs `complement()`, which `TFN`, `TrFN` and `IT2TrFN` lack; `fuzzy_codas` takes `TFN` and `TrFN` with any criteria, but not `IT2TrFN` (no `euclidean` and `hamming` distances) |
 
 Use score-first when the kind has no `complement()` and a cost criterion is involved, or
 when you want one comparison across the ten crisp methods. Use score-last when you follow a
@@ -417,6 +417,38 @@ $$
 
 and the relative assessment is that of crisp [CODAS](#codas), with `tau` and `psi`. The
 score only picks the negative-ideal numbers. This is the form of Altın et al. (2026).
+
+**`fuzzy_codas` on triangular and trapezoidal numbers** follows the fuzzy CODAS of
+Keshavarz Ghorabaee et al. (2017), with crisp weights. Each column is normalised by its
+largest score $D$ (the centroid by default, the paper's defuzzification),
+$\tilde n_{ij} = \tilde x_{ij} / \max_i D(\tilde x_{ij})$ for a benefit and
+$1 - \tilde x_{ij} / \max_i D(\tilde x_{ij})$ for a cost, so no `complement()` is needed;
+then weighted, $\tilde r_{ij} = w_j \tilde n_{ij}$, with the lowest-scored $\tilde r_{ij}$ of
+each column as negative ideal. The distances are the kind's `"euclidean"` and `"hamming"`
+(Li 2007, see [Triangular numbers](numbers-triangular.md)), **summed** over the criteria,
+
+$$
+E_i = \sum_j d_E(\tilde r_{ij}, \tilde{ns}_j), \qquad
+T_i = \sum_j d_H(\tilde r_{ij}, \tilde{ns}_j),
+$$
+
+and the assessment is the same. `operators` also records `"normalization": "max_score"`.
+The largest score of every column must be positive.
+
+```python exec="on" source="above" result="text"
+from bulanik import TFN
+from bulanik.mcdm import DecisionMatrix, fuzzy_codas, rank_fuzzy
+
+m = [[TFN(2, 3, 4), TFN(1, 2, 3)], [TFN(4, 5, 6), TFN(3, 4, 6)], [TFN(1, 2, 4), TFN(2, 3, 4)]]
+r = fuzzy_codas(m, [0.6, 0.4], ["benefit", "cost"], alternatives=["Atlas", "Borealis", "Cedar"],
+                criteria=["capacity", "price"])
+print(r.ranking, {k: round(v, 4) for k, v in r.scores.items()})
+print(r.operators)
+print(r.extras["negative_ideal"]["capacity"])
+
+dm = DecisionMatrix(["Atlas", "Borealis", "Cedar"], ["capacity", "price"], [m])
+print(rank_fuzzy(dm, [0.6, 0.4], ["benefit", "cost"], method="fuzzy_codas").ranking)
+```
 
 **`fuzzy_waspas`** builds the weighted sum and the weighted product as numbers,
 
@@ -517,9 +549,10 @@ discordance 0 in ELECTRE; ties keep input order.
 particular can change its order, since its distances are taken on different objects. Compare
 ranks across them, not score values.
 
-**A cost criterion needs `complement()`.** `fuzzy_codas`, `fuzzy_waspas` and `fuzzy_cocoso`
-raise `TypeError` for a cost criterion on a `TFN`, `TrFN` or `IT2TrFN`. Use `rank_fuzzy`
-with a crisp method, or rate the criterion as a benefit.
+**A cost criterion needs `complement()`.** `fuzzy_waspas` and `fuzzy_cocoso` raise
+`TypeError` for a cost criterion on a `TFN`, `TrFN` or `IT2TrFN`, and `fuzzy_codas` for one
+on an `IT2TrFN` (it takes `TFN` and `TrFN` costs through its normalisation). Use
+`rank_fuzzy` with a crisp method, or rate the criterion as a benefit.
 
 **`fuzzy_cocoso` needs non-negative scores.** Its default is `"normalized"` where the kind
 has it; a signed score such as `"difference"` raises `ValueError` as soon as one sum or
@@ -557,10 +590,11 @@ dm = DecisionMatrix(["A", "B"], ["c1"], [[[N(0, 0, 1, 1, 1, 1)], [N(0.6, 0.7, 0.
 show(lambda: rank_fuzzy(dm, [1.0], ["benefit"], method="marcos"))   # a score of 0
 
 from bulanik import IFN, TFN, IVPFN
-from bulanik.mcdm import fuzzy_codas, fuzzy_cocoso
+from bulanik.mcdm import fuzzy_codas, fuzzy_cocoso, fuzzy_waspas
 
 tfn = [[TFN(1, 2, 3), TFN(2, 3, 4)], [TFN(2, 3, 4), TFN(1, 2, 3)]]
-show(lambda: fuzzy_codas(tfn, W, T))                               # no complement() for a cost
+show(lambda: fuzzy_waspas(tfn, W, T))                              # no complement() for a cost
+show(lambda: fuzzy_codas([[TFN(-2, -1, 0), TFN(1, 2, 3)], [TFN(-3, -2, -1), TFN(2, 3, 4)]], W, T))
 low = [[IFN(0.1, 0.8), IFN(0.2, 0.7)], [IFN(0.2, 0.7), IFN(0.1, 0.8)]]
 show(lambda: fuzzy_cocoso(low, W, ["benefit", "benefit"], score="difference"))
 show(lambda: IVPFN(0.4, 0.5, 0.3, 0.4).score("defuzzified"))

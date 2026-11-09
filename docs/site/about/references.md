@@ -90,9 +90,18 @@ code evaluates, which for a few methods carry implementation choices stated on t
   [doi:10.15388/Informatica.2015.57](https://doi.org/10.15388/Informatica.2015.57)
 - Keshavarz Ghorabaee, M., Zavadskas, E. K., Turskis, Z., and Antucheviciene, J. (2016). A new combinative distance-based assessment (CODAS) method for multi-criteria decision-making. *Economic Computation and Economic Cybernetics Studies and Research*, 50(3), 25-44.
   *No DOI* (none in the Crossref registry).
+- Keshavarz Ghorabaee, M., Amiri, M., Zavadskas, E. K., Hooshmand, R., and Antucheviciene, J.
+  (2017). Fuzzy extension of the CODAS method for multi-criteria market segment evaluation.
+  *Journal of Business Economics and Management*, 18(1), 1-19.
+  [doi:10.3846/16111699.2016.1278559](https://doi.org/10.3846/16111699.2016.1278559)
+  (`fuzzy_codas` on `TFN` and `TrFN`)
 - Kutlu Gündoğdu, F., and Kahraman, C. (2019). Spherical fuzzy sets and spherical fuzzy
   TOPSIS method. *Journal of Intelligent & Fuzzy Systems*, 36(1), 337-352.
   [doi:10.3233/JIFS-181401](https://doi.org/10.3233/JIFS-181401)
+- Li, D.-F. (2007). Compromise ratio method for fuzzy multi-attribute group decision making.
+  *Applied Soft Computing*, 7(3), 807-817.
+  [doi:10.1016/j.asoc.2006.02.003](https://doi.org/10.1016/j.asoc.2006.02.003)
+  (the `"euclidean"` and `"hamming"` distances of `TFN` and `TrFN`)
 - Liu, P., Rani, P., and Mishra, A. R. (2021). A novel Pythagorean fuzzy combined compromise solution framework for the assessment of medical waste treatment technology. *Journal of Cleaner Production*, 292, 126047.
   [doi:10.1016/j.jclepro.2021.126047](https://doi.org/10.1016/j.jclepro.2021.126047)
   Cited as see also for fuzzy CoCoSo.

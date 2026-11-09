@@ -4,6 +4,33 @@ All notable changes to bulanik are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - Unreleased
+
+Fuzzy CODAS on triangular and trapezoidal numbers. Every existing result is unchanged: the
+default distance of `TFN` and `TrFN` is still `"vertex"`, and `fuzzy_codas` on the other
+number kinds computes what it did in 0.3.0.
+
+### Added
+
+- `TFN` and `TrFN` distances `"euclidean"` and `"hamming"`: the weighted distances of
+  Li (2007), with weights (1, 2, 2, 1)/6 on the trapezoid points and (1, 4, 1)/6 on the
+  triangle points (a triangle is the trapezoid (l, m, m, u)).
+- `fuzzy_codas` (and `rank_fuzzy(method="fuzzy_codas")`) accepts `TFN` and `TrFN`
+  matrices, with benefit and cost criteria, following the fuzzy CODAS of Keshavarz
+  Ghorabaee et al. (2017): each column is normalised by its largest score (the centroid
+  by default), x / max D for a benefit and 1 - x / max D for a cost; the weighted
+  distances from the negative ideal are summed over the criteria. `operators` also holds
+  `"normalization": "max_score"` for these kinds.
+
+### Changed
+
+- `fuzzy_codas` no longer raises `TypeError` for `TFN` and `TrFN` matrices (benefit or
+  cost criteria). It still raises it for `IT2TrFN`, which has no Euclidean or Hamming
+  distance. `fuzzy_waspas` and `fuzzy_cocoso` still need `complement()` for a cost
+  criterion.
+
+[0.4.0]: https://github.com/tdelphi1981/bulanik/releases/tag/v0.4.0
+
 ## [0.3.0] - 2026-11-05
 
 Interval-valued AHP and fuzzy versions of three more ranking methods. The public v0.2 API is unchanged apart from

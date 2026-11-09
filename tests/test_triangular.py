@@ -106,8 +106,77 @@ def test_score_is_defuzzify_and_names_checked():
 def test_vertex_distance():
     assert TFN(1, 2, 3).distance(TFN(2, 3, 5)) == approx(2**0.5)  # sqrt((1+1+4)/3)
     assert TrFN(1, 2, 3, 4).distance(TrFN(1, 2, 3, 6)) == approx(1.0)  # sqrt(4/4)
-    with pytest.raises(ValueError, match="valid: vertex"):
-        TFN(1, 2, 3).distance(TFN(1, 2, 3), "hamming")
+    with pytest.raises(ValueError, match="valid: vertex, euclidean, hamming"):
+        TFN(1, 2, 3).distance(TFN(1, 2, 3), "chebyshev")
+
+
+def test_distance_names_and_default_unchanged():
+    assert TFN.DISTANCES == TrFN.DISTANCES == ("vertex", "euclidean", "hamming")
+    assert TFN.DEFAULT_DISTANCE == TrFN.DEFAULT_DISTANCE == "vertex"
+    a, b = TFN(1, 2, 3), TFN(2, 3, 5)
+    assert a.distance(b) == a.distance(b, "vertex") == a.distance(b, None)
+
+
+def test_euclidean_and_hamming_distance_hand_computed():
+    # Li (2007) weighted distances as used by Keshavarz Ghorabaee et al. (2017), Eqs. (12)-(13):
+    # trapezoid weights (1, 2, 2, 1)/6; a triangle (l, m, u) is the trapezoid (l, m, m, u),
+    # so its weights are (1, 4, 1)/6.
+    a, b = TFN(1, 2, 3), TFN(2, 3, 5)  # differences (1, 1, 2)
+    assert a.distance(b, "euclidean") == approx((1.5) ** 0.5)  # sqrt((1 + 4*1 + 4)/6)
+    assert a.distance(b, "hamming") == approx(7 / 6)  # (1 + 4*1 + 2)/6
+    assert TFN(1, 2, 4).distance(TFN(2, 3, 5), "euclidean") == approx(1.0)  # sqrt(6/6)
+    assert TFN(1, 2, 4).distance(TFN(2, 3, 5), "hamming") == approx(1.0)
+    # only the peak moves: weight 4/6
+    assert TFN(0, 1, 2).distance(TFN(0, 2, 2), "hamming") == approx(4 / 6)
+    assert TFN(0, 1, 2).distance(TFN(0, 2, 2), "euclidean") == approx((4 / 6) ** 0.5)
+    # trapezoids, differences (0, 0, 0, 2) and (1, 2, 3, 4)
+    p, q = TrFN(1, 2, 3, 4), TrFN(1, 2, 3, 6)
+    assert p.distance(q, "euclidean") == approx((4 / 6) ** 0.5)
+    assert p.distance(q, "hamming") == approx(2 / 6)
+    r, s = TrFN(0, 0, 0, 0), TrFN(1, 2, 3, 4)
+    assert r.distance(s, "euclidean") == approx(((1 + 8 + 18 + 16) / 6) ** 0.5)
+    assert r.distance(s, "hamming") == approx((1 + 4 + 6 + 4) / 6)
+
+
+def test_li_distance_reproduces_published_cell():
+    # Keshavarz Ghorabaee et al. (2017), Table 6, criterion C12: S1 against ns_12.
+    s1, ns = TrFN(0.38, 0.53, 0.61, 0.79), TrFN(0.04, 0.09, 0.13, 0.25)
+    # differences (.34, .44, .48, .54)
+    assert s1.distance(ns, "hamming") == approx((0.34 + 0.88 + 0.96 + 0.54) / 6)
+    assert s1.distance(ns, "euclidean") == approx(
+        ((0.34**2 + 2 * 0.44**2 + 2 * 0.48**2 + 0.54**2) / 6) ** 0.5)
+
+
+def test_tfn_distances_equal_their_trapezoid_distances():
+    a, b = TFN(0.5, 1.5, 4), TFN(-1, 2, 2.5)
+    for method in ("euclidean", "hamming"):  # (vertex is not: it averages over 3 vs 4 points)
+        assert a.distance(b, method) == approx(a.to_trfn().distance(b.to_trfn(), method))
+
+
+@given(tfns(), tfns())
+def test_tfn_new_distances_symmetric_nonnegative(a, b):
+    for method in ("euclidean", "hamming"):
+        d = a.distance(b, method)
+        assert d >= 0
+        assert d == approx(b.distance(a, method))
+        assert a.distance(a, method) == 0.0
+    # the point weights sum to 1, so the weighted mean of |x| is at most its weighted RMS
+    assert a.distance(b, "hamming") <= a.distance(b, "euclidean") + 1e-9
+
+
+@given(trfns(), trfns())
+def test_trfn_new_distances_symmetric_nonnegative(a, b):
+    for method in ("euclidean", "hamming"):
+        d = a.distance(b, method)
+        assert d >= 0
+        assert d == approx(b.distance(a, method))
+        assert a.distance(a, method) == 0.0
+    assert a.distance(b, "hamming") <= a.distance(b, "euclidean") + 1e-9
+
+
+def test_new_distances_reject_other_kinds():
+    with pytest.raises(TypeError):
+        TFN(1, 2, 3).distance(TrFN(1, 2, 3, 4), "euclidean")
 
 
 def test_reciprocal():

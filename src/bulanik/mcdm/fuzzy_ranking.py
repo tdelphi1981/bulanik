@@ -24,14 +24,19 @@ number kind, crisp criteria weights in the forms the crisp methods accept,
 first. A **cost criterion** is turned into a benefit one with the kind's
 `complement()` (for an orthopair number $(\mu, \nu) \mapsto (\nu, \mu)$), which
 exists for the orthopair, interval-valued orthopair, picture, spherical,
-neutrosophic and interval neutrosophic kinds; triangular, trapezoidal and
-interval type-2 numbers have none, so they can only be used with benefit
-criteria here (or through [`rank_fuzzy`][bulanik.mcdm.fuzzy.rank_fuzzy]).
+neutrosophic and interval neutrosophic kinds. Triangular, trapezoidal and
+interval type-2 numbers have none, so `fuzzy_waspas` and `fuzzy_cocoso` take
+them with benefit criteria only (or use
+[`rank_fuzzy`][bulanik.mcdm.fuzzy.rank_fuzzy]). `fuzzy_codas` on triangular
+and trapezoidal numbers follows the fuzzy CODAS of Keshavarz Ghorabaee et al.
+(2017) instead, whose normalisation handles cost criteria itself.
 
 References:
     Rani, Ali,
     Krishankumar, Mishra, Cavallaro & Ravichandran (2021), Energies 14(15), 4594
-    (SVN-CoCoSo).
+    (SVN-CoCoSo). Keshavarz Ghorabaee, Amiri, Zavadskas, Hooshmand &
+    Antucheviciene (2017), Journal of Business Economics and Management 18(1),
+    1-19 (fuzzy CODAS on trapezoidal numbers).
 """
 
 from __future__ import annotations
@@ -42,7 +47,8 @@ from typing import Any, Mapping, Sequence
 from .._validate import choose
 from ..aggregate import wa, wg
 from ..numbers import FuzzyNumber
-from ._common import rank_order
+from ..numbers.triangular import _Piecewise
+from ._common import check_types, rank_order
 from .ranking import _finite_all, _prepare_names, _unit_param
 from .results import BWMResult, RankingResult, WeightingResult
 from .scoring import _cocoso_parts, _codas_assessment
@@ -80,8 +86,13 @@ def _setup(
     ops: str,
     score: str | None,
     prefer_normalized: bool = False,
+    keep_costs: bool = False,
 ) -> tuple[list[list[Any]], list[str], list[str], list[float], str, str]:
-    """Validate the input; return the benefit-oriented matrix, names, weights, ops and score."""
+    """Validate the input; return the benefit-oriented matrix, names, weights, ops and score.
+
+    With `keep_costs` the cost columns are returned as given (the caller
+    handles them) instead of being replaced by their complements.
+    """
     x = _fuzzy_matrix(matrix, owner)
     alts, crit, types, w = _prepare_names(
         len(x), len(x[0]), weights, criteria_types, alternatives, criteria, normalize_weights
@@ -91,7 +102,7 @@ def _setup(
     default = "normalized" if prefer_normalized and "normalized" in kind.SCORES else kind.DEFAULT_SCORE
     resolved = choose(score, kind.SCORES, "score", kind.__name__, default)
     for j, t in enumerate(types):
-        if t != "cost":
+        if t != "cost" or keep_costs:
             continue
         if getattr(kind, "complement", None) is None:
             raise TypeError(
@@ -116,6 +127,27 @@ def _ranking(method: str, alts: list[str], scores: list[float], operators: dict[
         operators=operators,
         extras=extras,
     )
+
+
+def _normalize_by_max_score(
+    x: list[list[Any]], types: Sequence[str], crit: Sequence[str], score: str
+) -> list[list[Any]]:
+    """Fuzzy CODAS normalisation of triangular / trapezoidal columns (Eq. (21) of the 2017 paper)."""
+    m, n = len(x), len(x[0])
+    out: list[list[Any]] = [[None] * n for _ in range(m)]
+    for j in range(n):
+        top = max(x[i][j].score(score) for i in range(m))
+        if not top > 0.0:
+            raise ValueError(
+                f"fuzzy_codas: criterion '{crit[j]}' needs a positive largest {score} score "
+                f"to normalise by, got {top:g}"
+            )
+        for i in range(m):
+            v = x[i][j].scale(1.0 / top)
+            if types[j] == "cost":
+                v = v._make((1.0,) * len(v._pts())) - v
+            out[i][j] = v
+    return out
 
 
 def fuzzy_codas(
@@ -159,6 +191,34 @@ def fuzzy_codas(
     (`"equation"`, the default, adds the taxicab term when
     $|E_i - E_k| \ge \tau$, as in Altın et al. (2026), Eq. (19)).
 
+    **Triangular and trapezoidal numbers** ([`TFN`][bulanik.numbers.TFN],
+    [`TrFN`][bulanik.numbers.TrFN]) follow the fuzzy CODAS of Keshavarz
+    Ghorabaee, Amiri, Zavadskas, Hooshmand & Antucheviciene (2017), Eqs.
+    (20)-(31), with crisp weights. No complement is needed: each column is
+    first normalised by its largest score $D$ (`score`, by default the
+    centroid, which is the defuzzification $D$ of the paper's Eq. (11)),
+
+    $$\tilde n_{ij} = \begin{cases} \tilde x_{ij} / \max_i D(\tilde x_{ij}) & j \text{ benefit} \\
+      1 - \tilde x_{ij} / \max_i D(\tilde x_{ij}) & j \text{ cost} \end{cases}$$
+
+    ($1 - (l, m, u) = (1 - u, 1 - m, 1 - l)$; the largest score of each column
+    must be positive), weighted, $\tilde r_{ij} = w_j \tilde n_{ij}$, and the
+    negative ideal $\tilde{ns}_j$ is the $\tilde r_{ij}$ with the lowest
+    score. The distances are the weighted Euclidean and Hamming distances of
+    Li (2007) (the kind's `"euclidean"` and `"hamming"`, Eqs. (12)-(13); for
+    a triangle $d_E = \sqrt{\tfrac16[\Delta l^2 + 4\Delta m^2 + \Delta u^2]}$
+    and $d_H = \tfrac16[|\Delta l| + 4|\Delta m| + |\Delta u|]$), and they are
+    **summed** over the criteria, Eqs. (26)-(27):
+
+    $$E_i = \sum_j d_E(\tilde r_{ij}, \tilde{ns}_j), \qquad
+      T_i = \sum_j d_H(\tilde r_{ij}, \tilde{ns}_j).$$
+
+    The relative assessment and $H_i$ are as above (the paper's Eqs.
+    (28)-(31), with $\theta = \tau = 0.02$). `operators` then also holds
+    `"normalization": "max_score"`. The paper takes fuzzy weights $\tilde
+    w_j$; here weights are crisp, which is the paper's method with
+    $\tilde w_j = (w_j, w_j, w_j)$.
+
     `extras` holds `E` and `T` (by alternative) and `negative_ideal`, the
     numbers $\tilde{ns}_j$ **by criterion**. Picture numbers fail to scale
     by almost any weight below 1 (see [`PictureFN`][bulanik.numbers.PictureFN]),
@@ -169,7 +229,8 @@ def fuzzy_codas(
 
     Args:
         matrix: Alternatives by criteria of fuzzy numbers of one kind (and
-            rung) with `euclidean` and `hamming` distances.
+            rung) with `euclidean` and `hamming` distances (including `TFN`
+            and `TrFN`).
         weights: Crisp criteria weights: a sequence in criteria order, a
             mapping by criterion name, or a
             [`WeightingResult`][bulanik.mcdm.results.WeightingResult] /
@@ -182,23 +243,26 @@ def fuzzy_codas(
         normalize_weights: Rescale non-negative weights to sum to 1 instead of
             requiring it.
         ops: Operator set of the kind, e.g. `"algebraic"` or `"einstein"`.
-        score: Score that picks the negative-ideal numbers; `None` for the
-            kind's default.
+        score: Score that picks the negative-ideal numbers (and, for `TFN`
+            and `TrFN`, the column maximum of the normalisation); `None` for
+            the kind's default.
         tau: Threshold of $\psi$ in [0, 1].
         psi: `"equation"` or `"tables"`, as for crisp CODAS.
 
     Returns:
         A [`RankingResult`][bulanik.mcdm.results.RankingResult] with
-        `operators == {"ops": ..., "score": ..., "tau": "0.02", "psi": "equation"}`.
+        `operators == {"ops": ..., "score": ..., "tau": "0.02", "psi": "equation"}`
+        (plus `"normalization": "max_score"` for `TFN` and `TrFN`).
 
     Raises:
         TypeError: If an entry is not a fuzzy number, the kinds (or rungs)
-            differ, a cost criterion meets a kind without `complement()`, the
-            kind lacks a Euclidean or Hamming distance, or a weight or `tau` is
-            a `bool` or `str`.
+            differ, a cost criterion meets a kind without `complement()` (other
+            than `TFN` and `TrFN`), the kind lacks a Euclidean or Hamming
+            distance (e.g. `IT2TrFN`), or a weight or `tau` is a `bool` or `str`.
         ValueError: If the matrix is empty or ragged, names, types or weights
             do not match (as for the crisp methods), `ops`, `score` or `psi` is
-            unknown, `tau` is outside [0, 1], or the kind cannot scale a rating.
+            unknown, `tau` is outside [0, 1], the kind cannot scale a rating,
+            or (`TFN`, `TrFN`) the largest score of a column is not positive.
 
     Examples:
         >>> from bulanik import IFN
@@ -210,10 +274,30 @@ def fuzzy_codas(
         >>> {k: round(v, 4) for k, v in r.scores.items()}
         {'A1': -0.2708, 'A2': 0.2708}
 
+        Triangular numbers, with a cost criterion:
+
+        >>> from bulanik import TFN
+        >>> t = [[TFN(2, 3, 4), TFN(1, 2, 3)],
+        ...      [TFN(4, 5, 6), TFN(3, 4, 6)],
+        ...      [TFN(1, 2, 4), TFN(2, 3, 4)]]
+        >>> r = fuzzy_codas(t, [0.6, 0.4], ["benefit", "cost"])
+        >>> r.ranking
+        ('A2', 'A1', 'A3')
+        >>> {k: round(v, 4) for k, v in r.scores.items()}
+        {'A1': 0.3213, 'A2': 0.5326, 'A3': -0.8539}
+        >>> r.extras["negative_ideal"]["C1"]
+        TFN(l=0.12, m=0.24, u=0.48)
+
     References:
         Keshavarz Ghorabaee,
         Zavadskas, Turskis & Antucheviciene (2016), Economic Computation and
         Economic Cybernetics Studies and Research 50(3), 25-44 (crisp CODAS).
+        Keshavarz Ghorabaee, Amiri, Zavadskas, Hooshmand & Antucheviciene
+        (2017), Fuzzy extension of the CODAS method for multi-criteria market
+        segment evaluation, Journal of Business Economics and Management
+        18(1), 1-19, doi:10.3846/16111699.2016.1278559 (TFN and TrFN). Li
+        (2007), Applied Soft Computing 7(3), 807-817 (the TFN and TrFN
+        distances).
         See also: Szmidt & Kacprzyk (2000), Distances between intuitionistic
         fuzzy sets, Fuzzy Sets and Systems 114(3), 505-518,
         doi:10.1016/S0165-0114(98)00244-9; Bolturk (2018), Pythagorean fuzzy
@@ -223,11 +307,14 @@ def fuzzy_codas(
     """
     tau = _unit_param(tau, "tau")
     psi = choose(psi, ("equation", "tables"), "psi", "fuzzy_codas")
+    piecewise = issubclass(type(_fuzzy_matrix(matrix, "fuzzy_codas")[0][0]), _Piecewise)
     x, alts, crit, w, ops, resolved = _setup(
         "fuzzy_codas", matrix, weights, criteria_types, alternatives, criteria,
-        normalize_weights, ops, score,
+        normalize_weights, ops, score, keep_costs=piecewise,
     )
     kind = type(x[0][0])
+    if piecewise:
+        x = _normalize_by_max_score(x, check_types(criteria_types, len(x[0])), crit, resolved)
     missing = [d for d in ("euclidean", "hamming") if d not in kind.DISTANCES]
     if missing:
         raise TypeError(
@@ -252,17 +339,23 @@ def fuzzy_codas(
         col = [u[i][j] for i in range(m)]
         scores = [v.score(resolved) for v in col]
         ns.append(col[scores.index(min(scores))])
-    e = [
-        math.sqrt(math.fsum(u[i][j].distance(ns[j], "euclidean") ** 2 for j in range(n)))
-        for i in range(m)
-    ]
+    if piecewise:  # ED_i and HD_i of Keshavarz Ghorabaee et al. (2017), Eqs. (26)-(27)
+        e = [math.fsum(u[i][j].distance(ns[j], "euclidean") for j in range(n)) for i in range(m)]
+    else:
+        e = [
+            math.sqrt(math.fsum(u[i][j].distance(ns[j], "euclidean") ** 2 for j in range(n)))
+            for i in range(m)
+        ]
     t = [math.fsum(u[i][j].distance(ns[j], "hamming") for j in range(n)) for i in range(m)]
     h = _codas_assessment(e, t, tau, psi)
+    operators = {"ops": ops, "score": resolved, "tau": str(tau), "psi": psi}
+    if piecewise:
+        operators["normalization"] = "max_score"
     return _ranking(
         "fuzzy_codas",
         alts,
         h,
-        {"ops": ops, "score": resolved, "tau": str(tau), "psi": psi},
+        operators,
         E=dict(zip(alts, e)),
         T=dict(zip(alts, t)),
         negative_ideal=dict(zip(crit, ns)),

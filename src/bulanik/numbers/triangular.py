@@ -26,9 +26,10 @@ class _Piecewise(FuzzyNumber):
     The methods documented here are inherited by [`TFN`][bulanik.numbers.TFN]
     and [`TrFN`][bulanik.numbers.TrFN].
 
-    Scores: `"centroid"` (default), `"graded_mean"`, `"mean"`. Distance:
-    `"vertex"` (default). Triangular and trapezoidal numbers have no accuracy
-    function.
+    Scores: `"centroid"` (default), `"graded_mean"`, `"mean"`. Distances:
+    `"vertex"` (default), `"euclidean"` and `"hamming"` (the weighted distances
+    of Li 2007 that fuzzy CODAS uses). Triangular and trapezoidal numbers have
+    no accuracy function.
     """
 
     OPS = ("algebraic",)
@@ -36,7 +37,7 @@ class _Piecewise(FuzzyNumber):
     DEFAULT_SCORE = "centroid"
     ACCURACIES = ()
     DEFAULT_ACCURACY = None
-    DISTANCES = ("vertex",)
+    DISTANCES = ("vertex", "euclidean", "hamming")
     DEFAULT_DISTANCE = "vertex"
 
     # -- hooks implemented by the concrete classes -------------------------
@@ -396,32 +397,82 @@ class _Piecewise(FuzzyNumber):
         """
         raise ValueError(f"{type(self).__name__} has no accuracy function")
 
+    def _trapezoid(self) -> tuple[float, float, float, float]:
+        """The four points of the number as a trapezoid (a triangle repeats its peak)."""
+        p = self._pts()
+        return (p[0], p[1], p[1], p[2]) if len(p) == 3 else (p[0], p[1], p[2], p[3])
+
     def distance(self, other: Any, method: str | None = None) -> float:
-        r"""Vertex distance (Chen 2000): $\sqrt{\tfrac{1}{n}\sum_i (x_i - y_i)^2}$ over the $n$ points.
+        r"""Distance to another number of the same type; `"vertex"` by default.
+
+        - `"vertex"` (Chen 2000): $\sqrt{\tfrac{1}{n}\sum_i (x_i - y_i)^2}$ over
+          the $n$ points (3 for a triangle, 4 for a trapezoid).
+        - `"euclidean"` and `"hamming"`: the weighted Euclidean and Hamming
+          distances of Li (2007) between trapezoids $M = (m_1, m_2, m_3, m_4)$
+          and $N = (n_1, n_2, n_3, n_4)$, the distances of fuzzy CODAS
+          (Keshavarz Ghorabaee et al. 2017, Eqs. (12)-(13)):
+
+          $$d_E(M, N) = \sqrt{\tfrac16\left[(m_1 - n_1)^2 + 2(m_2 - n_2)^2
+            + 2(m_3 - n_3)^2 + (m_4 - n_4)^2\right]},$$
+
+          $$d_H(M, N) = \tfrac16\left[|m_1 - n_1| + 2|m_2 - n_2|
+            + 2|m_3 - n_3| + |m_4 - n_4|\right].$$
+
+          A triangle $(l, m, u)$ is the trapezoid $(l, m, m, u)$, so for
+          triangles $A$ and $B$
+
+          $$d_E(A, B) = \sqrt{\tfrac16\left[(l_A - l_B)^2 + 4(m_A - m_B)^2
+            + (u_A - u_B)^2\right]}, \qquad
+            d_H(A, B) = \tfrac16\left[|l_A - l_B| + 4|m_A - m_B| + |u_A - u_B|\right],$$
+
+          and a `TFN` and its [`to_trfn`][bulanik.numbers.TFN.to_trfn] have
+          the same distances. The point weights sum to 1, so a constant shift
+          by $c$ is at distance $|c|$ in both, and $d_H \le d_E$.
 
         Args:
             other: A number of the same type.
-            method: Only `"vertex"` exists (the default).
+            method: `"vertex"`, `"euclidean"` or `"hamming"`; `None` means
+                `"vertex"`.
 
         Returns:
             The distance.
 
         Raises:
             TypeError: If `other` is not the same type.
-            ValueError: If `method` is not `"vertex"`.
+            ValueError: If `method` is not one of the three names.
 
         References:
-            Chen (2000), Fuzzy Sets and Systems 114: the vertex method.
+            Chen (2000), Fuzzy Sets and Systems 114(1), 1-9: the vertex method.
+            Li (2007), Compromise ratio method for fuzzy multi-attribute group
+            decision making, Applied Soft Computing 7(3), 807-817,
+            doi:10.1016/j.asoc.2006.02.003. Keshavarz Ghorabaee, Amiri,
+            Zavadskas, Hooshmand & Antucheviciene (2017), Journal of Business
+            Economics and Management 18(1), 1-19,
+            doi:10.3846/16111699.2016.1278559.
 
         Examples:
-            >>> from bulanik import TFN
+            >>> from bulanik import TFN, TrFN
             >>> TFN(1, 2, 4).distance(TFN(2, 3, 5))
             1.0
+            >>> round(TFN(1, 2, 3).distance(TFN(2, 3, 5), "euclidean"), 4)
+            1.2247
+            >>> round(TFN(1, 2, 3).distance(TFN(2, 3, 5), "hamming"), 4)
+            1.1667
+            >>> round(TrFN(1, 2, 3, 4).distance(TrFN(1, 2, 3, 6), "hamming"), 4)
+            0.3333
         """
-        choose(method, self.DISTANCES, "distance", type(self).__name__, self.DEFAULT_DISTANCE)
+        method = choose(
+            method, self.DISTANCES, "distance", type(self).__name__, self.DEFAULT_DISTANCE
+        )
         self.same_kind(other)
-        p, q = self._pts(), other._pts()
-        return math.sqrt(sum((x - y) ** 2 for x, y in zip(p, q)) / len(p))
+        if method == "vertex":
+            p, q = self._pts(), other._pts()
+            return math.sqrt(sum((x - y) ** 2 for x, y in zip(p, q)) / len(p))
+        diffs = [x - y for x, y in zip(self._trapezoid(), other._trapezoid())]
+        weights = (1.0, 2.0, 2.0, 1.0)
+        if method == "hamming":
+            return math.fsum(k * abs(d) for k, d in zip(weights, diffs)) / 6.0
+        return math.sqrt(math.fsum(k * d * d for k, d in zip(weights, diffs)) / 6.0)
 
 
 @dataclass(frozen=True)

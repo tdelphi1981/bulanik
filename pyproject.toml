@@ -1,6 +1,6 @@
 [project]
 name = "bulanik"
-version = "0.3.0"
+version = "0.4.0"
 description = "Easy-to-use fuzzy numbers, fuzzy inference and fuzzy MCDM, with LumiX and sezgi bridges"
 authors = [
     {name = "Tolga Berber", email = "tolga.berber@fen.ktu.edu.tr"},
