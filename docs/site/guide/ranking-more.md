@@ -416,7 +416,8 @@ T_i = \sum_j d_H(\tilde u_{ij}, \tilde{ns}_j),
 $$
 
 and the relative assessment is that of crisp [CODAS](#codas), with `tau` and `psi`. The
-score only picks the negative-ideal numbers. This is the form of Altın et al. (2026).
+score only picks the negative-ideal numbers. This is the CODAS of Keshavarz Ghorabaee et al. (2016) with
+the kind's distances (for intuitionistic numbers those of Szmidt & Kacprzyk 2000) in place of the crisp differences.
 
 **`fuzzy_codas` on triangular and trapezoidal numbers** follows the fuzzy CODAS of
 Keshavarz Ghorabaee et al. (2017), with crisp weights. Each column is normalised by its

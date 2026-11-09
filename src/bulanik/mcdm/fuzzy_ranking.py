@@ -180,16 +180,17 @@ def fuzzy_codas(
     $d_E(a, b)^2 = \tfrac12[(\mu_a - \mu_b)^2 + (\nu_a - \nu_b)^2 +
     (\pi_a - \pi_b)^2]$ and $d_H(a, b) = \tfrac12(|\mu_a - \mu_b| + |\nu_a -
     \nu_b| + |\pi_a - \pi_b|)$ (the kind's `"euclidean"` and `"hamming"`
-    distances), and $E_i$ and $T_i$ are the sums of Altın et al. (2026),
-    Eqs. (15)-(16), with these distances (see also Szmidt & Kacprzyk 2000 on
-    distances between intuitionistic fuzzy sets). The relative assessment and the score are those
+    distances; Szmidt & Kacprzyk 2000 on distances between intuitionistic
+    fuzzy sets), and $E_i$ and $T_i$ are the Euclidean and taxicab totals of
+    the CODAS of Keshavarz Ghorabaee et al. (2016) with these distances in
+    place of the crisp differences. The relative assessment and the score are those
     of crisp [`codas`][bulanik.mcdm.scoring.codas] (shared code),
 
     $$h_{ik} = (E_i - E_k) + \psi(E_i - E_k)\,(T_i - T_k), \qquad H_i = \sum_k h_{ik},$$
 
     larger is better; `psi` selects the convention of $\psi$ exactly as there
     (`"equation"`, the default, adds the taxicab term when
-    $|E_i - E_k| \ge \tau$, as in Altın et al. (2026), Eq. (19)).
+    $|E_i - E_k| \ge \tau$, as in Keshavarz Ghorabaee et al. (2016)).
 
     **Triangular and trapezoidal numbers** ([`TFN`][bulanik.numbers.TFN],
     [`TrFN`][bulanik.numbers.TrFN]) follow the fuzzy CODAS of Keshavarz

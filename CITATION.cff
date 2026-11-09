@@ -5,7 +5,7 @@ message: >-
 type: software
 title: bulanik
 version: 0.4.0
-date-released: "2026-11-05"
+date-released: "2026-11-09"
 abstract: >-
   Easy-to-use fuzzy numbers, fuzzy inference and fuzzy multi-criteria
   decision making in pure Python, with optional bridges to LumiX and sezgi

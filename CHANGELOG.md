@@ -4,7 +4,7 @@ All notable changes to bulanik are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows
 [Semantic Versioning](https://semver.org/).
 
-## [0.4.0] - Unreleased
+## [0.4.0] - 2026-11-09
 
 Fuzzy CODAS on triangular and trapezoidal numbers. Every existing result is unchanged: the
 default distance of `TFN` and `TrFN` is still `"vertex"`, and `fuzzy_codas` on the other
@@ -30,6 +30,10 @@ number kinds computes what it did in 0.3.0.
   criterion.
 
 [0.4.0]: https://github.com/tdelphi1981/bulanik/releases/tag/v0.4.0
+
+### Changed
+
+- The intuitionistic `fuzzy_codas` docstring and the ranking guide now cite the CODAS of Keshavarz Ghorabaee et al. (2016) with the distances of Szmidt & Kacprzyk (2000) instead of an unlisted source; the computation is unchanged.
 
 ## [0.3.0] - 2026-11-05
 
